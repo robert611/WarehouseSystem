@@ -1,0 +1,5 @@
+activate_logout_in_security: Don't forget to activate logout functionality
+register_button: Register
+registration: Register
+password.registration_form: Password
+repeat_password.registration_form: Repeat Password
