@@ -1,3 +1,7 @@
 .error-msg {
     color: #c62828;
 }
+
+nav.navbar {
+    padding: 20px;
+}

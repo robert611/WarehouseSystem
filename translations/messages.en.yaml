@@ -3,3 +3,6 @@ register_button: Register
 registration: Register
 password.registration_form: Password
 repeat_password.registration_form: Repeat Password
+logout.navbar: Logout
+login.navbar: Login
+registration.navbar: Register

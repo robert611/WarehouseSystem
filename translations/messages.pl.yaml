@@ -1,5 +1,8 @@
-activate_logout_in_security: Nie aktywowywano funkcjonalności wylogowywawania się
+activate_logout_in_security: Nie aktywowano funkcjonalności wylogowywawania się
 register_button: Zarejestruj się
 registration: Rejestracja
 password.registration_form: Hasło
 repeat_password.registration_form: Powtórz hasło
+logout.navbar: Wyloguj się
+login.navbar: Zaloguj się
+registration.navbar: Rejestracja

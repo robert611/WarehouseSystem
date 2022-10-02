@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ path('app_index') }}" style="margin-left: 10%;">Warehouse System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-3"></ul>
+        <ul class="navbar-nav my-2 my-lg-0">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link"  href="{{ path('account') }}">{{ 'my_account.navbar'|trans|raw }}</a>#}
+{#                </li>#}
+{#                {% if is_granted('ROLE_ADMIN') %}#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{{ path('admin') }}">{{ 'administrator_panel.navbar'|trans|raw }}</a>#}
+{#                    </li>#}
+{#                {% endif %}#}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">{{ 'logout.navbar'|trans|raw }}</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link"  href="{{ path('app_register') }}">{{ 'registration.navbar'|trans|raw }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  href="{{ path('app_login') }}">{{ 'login.navbar'|trans|raw }}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
