@@ -1,3 +1,7 @@
 controllers:
-    resource: ../src/Controller/
+    resource: ../src/Dashboard/Controller/
+    type: attribute
+
+security_controllers:
+    resource: ../src/Security/Controller/
     type: attribute

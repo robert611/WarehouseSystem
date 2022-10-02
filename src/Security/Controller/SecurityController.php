@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Security\Controller;
 
 use JetBrains\PhpStorm\NoReturn;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

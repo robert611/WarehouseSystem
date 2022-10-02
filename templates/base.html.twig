@@ -11,15 +11,19 @@
                   integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
                   crossorigin="anonymous">
             <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/side_navbar.css') }}">
             <script src="https://kit.fontawesome.com/b93a30c2a7.js" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
         {{ include('base/_navbar.html.twig') }}
-        <div class="container">
+        {% block side_navbar %}
+            {{ include('base/_side_navbar.html.twig') }}
+        {% endblock %}
+        <main>
             {{ include('base/_messages.html.twig') }}
-        </div>
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
+        </main>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"

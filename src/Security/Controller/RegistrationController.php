@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Security\Controller;
 
-use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Security\Entity\User;
+use App\Security\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_index');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('security/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

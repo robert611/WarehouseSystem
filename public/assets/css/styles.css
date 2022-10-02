@@ -5,3 +5,17 @@
 nav.navbar {
     padding: 20px;
 }
+
+main {
+    margin-left: 250px;
+}
+
+@media only screen and (max-width: 600px){
+    #side-navbar {
+        display: none!important;
+    }
+
+    main {
+        margin-left: 0;
+    }
+}
