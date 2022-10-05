@@ -7,3 +7,12 @@ logout.navbar: Logout
 login.navbar: Login
 registration.navbar: Register
 save: Save
+Name: Name
+Description: Description
+Auction price: Auction price
+Buy now price: Buy now price
+Sale type: Sale type
+BUY_NOW: Buy Now
+AUCTION: Auction
+BOTH: Buy now & Auctions
+back_to_list: Back to list
