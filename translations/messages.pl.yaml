@@ -6,3 +6,13 @@ repeat_password.registration_form: Powtórz hasło
 logout.navbar: Wyloguj się
 login.navbar: Zaloguj się
 registration.navbar: Rejestracja
+save: Zapisz
+Name: Nazwa
+Description: Opis
+Auction price: Cena licytacji
+Buy now price: Cena kup teraz
+Sale type: Typ sprzedaży
+BUY_NOW: Kup teraz
+AUCTION: Aukcja
+BOTH: Kup teraz & Aukcja
+back_to_list: Wróć do listy
