@@ -2,7 +2,9 @@
 
 {% block body %}
     <div class="container-fluid mt-3">
-        <button class="float-end btn btn-outline-success">Dodaj Produkt</button>
+        <a href="{{ path('app_product_new') }}">
+            <button class="float-end btn btn-outline-success">Dodaj Produkt</button>
+        </a>
         <div class="clear-both"></div>
         <div class="row mt-2">
             {% for product in products %}

@@ -2,12 +2,14 @@
 
 namespace App\Product\Entity;
 
+use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
 use App\Security\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -109,8 +111,12 @@ class Product
         return $this->saleType;
     }
 
-    public function setSaleType(int $saleType): self
+    public function setSaleType(int|SaleTypeEnum $saleType): self
     {
+        if ($saleType instanceof SaleTypeEnum) {
+            $saleType = $saleType->value;
+        }
+
         $this->saleType = $saleType;
 
         return $this;
@@ -133,7 +139,7 @@ class Product
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(User|UserInterface $user): self
     {
         $this->user = $user;
 

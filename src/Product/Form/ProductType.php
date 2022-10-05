@@ -3,7 +3,11 @@
 namespace App\Product\Form;
 
 use App\Product\Entity\Product;
+use App\Product\Model\Enum\SaleTypeEnum;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,12 +17,20 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
-            ->add('auctionPrice')
-            ->add('buyNowPrice')
-            ->add('saleType')
-            ->add('createdAt')
-            ->add('user')
+            ->add('description', TextareaType::class)
+            ->add('auctionPrice', NumberType::class, [
+                'attr' => [
+                    'step' => 0.1,
+                ],
+            ])
+            ->add('buyNowPrice', NumberType::class, [
+                'attr' => [
+                    'step' => 0.1,
+                ],
+            ])
+            ->add('saleType', EnumType::class, [
+                'class' => SaleTypeEnum::class,
+            ])
         ;
     }
 

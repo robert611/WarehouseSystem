@@ -6,3 +6,4 @@ repeat_password.registration_form: Repeat Password
 logout.navbar: Logout
 login.navbar: Login
 registration.navbar: Register
+save: Save
