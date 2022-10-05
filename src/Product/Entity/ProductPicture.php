@@ -18,7 +18,11 @@ class ProductPicture
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productPictures')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product;
+    private Product $product;
+
+    #[ORM\ManyToOne(targetEntity: ProductPictureType::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ProductPictureType $type;
 
     public function getId(): int
     {
@@ -42,9 +46,21 @@ class ProductPicture
         return $this->product;
     }
 
-    public function setProduct(?Product $product): self
+    public function setProduct(Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getType(): ProductPictureType
+    {
+        return $this->type;
+    }
+
+    public function setType(ProductPictureType $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
