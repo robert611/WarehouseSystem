@@ -10,6 +10,14 @@ main {
     margin-left: 250px;
 }
 
+.clear-both {
+    clear: both;
+}
+
+.display-inline {
+    display: inline;
+}
+
 @media only screen and (max-width: 600px){
     #side-navbar {
         display: none!important;

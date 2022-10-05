@@ -40,10 +40,10 @@ class Product
     private User $user;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductPicture::class, orphanRemoval: true)]
-    private ArrayCollection $productPictures;
+    private Collection $productPictures;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductParameter::class, orphanRemoval: true)]
-    private ArrayCollection $productParameters;
+    private Collection $productParameters;
 
     public function __construct()
     {

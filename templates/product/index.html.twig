@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        <button class="float-end btn btn-outline-success">Dodaj Produkt</button>
+        <div class="clear-both"></div>
+        <div class="row mt-2">
+            {% for product in products %}
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <div class="float-start mx-md-3">
+                            <img src="https://m.media-amazon.com/images/I/51-yE2RJpbL._AC_SY780_.jpg" alt="Product Picture"
+                                 class="img-fluid product-picture">
+                        </div>
+                        <div class="float-start mx-md-3">
+                            <b>{{ product.name }}</b>
+                            <p>{{ product.description }}</p>
+                            <p>
+                                {% if product.saleType in [saleTypeEnum.AUCTION.value, saleTypeEnum.BOTH.value] %}
+                                    Licytacja: {{ product.auctionPrice }} zł <br>
+                                {% endif %}
+                                {% if product.saleType in [saleTypeEnum.BUY_NOW.value, saleTypeEnum.BOTH.value] %}
+                                    Kup Teraz: {{ product.buyNowPrice }} zł
+                                {% endif %}
+                            </p>
+                            <button class="btn btn-outline-info">Edytuj</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr class="mt-4">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

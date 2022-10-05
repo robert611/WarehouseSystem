@@ -5,3 +5,7 @@ controllers:
 security_controllers:
     resource: ../src/Security/Controller/
     type: attribute
+
+product_controllers:
+    resource: ../src/Product/Controller/
+    type: attribute
