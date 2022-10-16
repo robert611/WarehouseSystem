@@ -18,3 +18,5 @@
 ###> symfony/phpunit-bridge ###
 ###< symfony/phpunit-bridge ###
 /rector.php
+
+/public/assets/images
