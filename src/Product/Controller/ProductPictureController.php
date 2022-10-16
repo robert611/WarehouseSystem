@@ -5,20 +5,21 @@ namespace App\Product\Controller;
 use App\Product\Entity\Product;
 use App\Product\Entity\ProductPicture;
 use App\Product\Form\ProductPictureType;
-use App\Product\Repository\ProductPictureRepository;
+use App\Product\Message\NewProductPicture;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[Route('/product/picture')]
 class ProductPictureController extends AbstractController
 {
-    private ProductPictureRepository $productPictureRepository;
+    private MessageBusInterface $bus;
 
-    public function __construct(ProductPictureRepository $productPictureRepository)
+    public function __construct(MessageBusInterface $bus)
     {
-        $this->productPictureRepository = $productPictureRepository;
+        $this->bus = $bus;
     }
 
     #[Route('/new/{product}', name: 'app_product_picture_new', methods: ['GET', 'POST'])]
@@ -34,9 +35,10 @@ class ProductPictureController extends AbstractController
             $pictureFile = $request->files->get('product_picture')['path'];
             $pictureFileName = $pictureFile->getClientOriginalName();
             $pictureFile->move($this->getParameter('product_pictures_directory'), $pictureFileName);
-            $productPicture->setPath($pictureFileName);
-            $productPicture->setProduct($product);
-            $this->productPictureRepository->add($productPicture, true);
+
+            $this->bus->dispatch(
+                new NewProductPicture($pictureFileName, $product->getId(), $productPicture->getType()->getId())
+            );
 
             return $this->json([], Response::HTTP_CREATED);
         }
