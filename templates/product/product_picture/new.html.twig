@@ -1,0 +1,13 @@
+<h4 class="mb-3">{{ product.name }}</h4>
+{{ form_start(form, {'attr': {'id': 'product-picture-form'}}) }}
+<div class="mb-3">
+    {{ form_label(form.path) }}
+    {{ form_widget(form.path, {'attr': {'class': 'form-control mt-2'}}) }}
+</div>
+<div class="mb-3">
+    {{ form_label(form.type) }}
+    {{ form_widget(form.type, {'attr': {'class': 'form-control mt-2'}}) }}
+</div>
+<div class="alert alert-dismissible hide" id="add-product-picture-alert" role="alert"></div>
+<button type="submit" class="btn btn-outline-success">{{ button_label|default('save')|trans|raw }}</button>
+{{ form_end(form) }}

@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/product/product.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="container-fluid mt-3">
         <a href="{{ path('app_product_new') }}">
@@ -26,6 +31,10 @@
                                 {% endif %}
                             </p>
                             <button class="btn btn-outline-info">Edytuj</button>
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                                    data-bs-target="#add-product-picture-modal" data-endpoint="{{ path('app_product_picture_new', {product: product.id}) }}">
+                                Dodaj zdjęcie
+                            </button>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -35,4 +44,10 @@
             {% endfor %}
         </div>
     </div>
+    {% include 'product/product/_add_picture_modal.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/product/product.js') }}"></script>
 {% endblock %}
