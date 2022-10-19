@@ -7,8 +7,8 @@
 
 {% block body %}
     <div class="container-fluid mt-3">
-        <a href="{{ path('app_product_new') }}">
-            <button class="float-end btn btn-outline-success">Dodaj Produkt</button>
+        <a href="{{ path('app_product_new') }}" id="add-product-link">
+            <button class="float-end btn btn-outline-success">{{ 'add_product'|trans }}</button>
         </a>
         <div class="clear-both"></div>
         <div class="row mt-2">
@@ -30,10 +30,10 @@
                                     Kup Teraz: {{ product.buyNowPrice }} zł
                                 {% endif %}
                             </p>
-                            <button class="btn btn-outline-info">Edytuj</button>
+                            <button class="btn btn-outline-info">{{ 'edit'|trans|capitalize }}</button>
                             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
                                     data-bs-target="#add-product-picture-modal" data-endpoint="{{ path('app_product_picture_new', {product: product.id}) }}">
-                                Dodaj zdjęcie
+                                {{ 'add_picture'|trans|capitalize }}
                             </button>
                         </div>
                     </div>
