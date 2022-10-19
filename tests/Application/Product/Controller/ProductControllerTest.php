@@ -39,4 +39,19 @@ class ProductControllerTest extends WebTestCase
         $this->assertSelectorTextContains('html', ucfirst($this->translator->trans('add_picture')));
         $this->assertSelectorTextContains('html', ucfirst($this->translator->trans('edit')));
     }
+
+    public function testNew(): void
+    {
+        $casualUser = $this->userRepository->findOneBy(['username' => 'casual_user']);
+        $this->client->loginUser($casualUser);
+
+        $crawler = $this->client->request('GET', '/product/new');
+
+        $productForm = $crawler->filter('#product-form')->getNode(0);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('html', $this->translator->trans('save'));
+        $this->assertSelectorTextContains('html', $this->translator->trans('back_to_list'));
+        $this->assertSame('product', $productForm->getAttribute('name'));
+    }
 }
