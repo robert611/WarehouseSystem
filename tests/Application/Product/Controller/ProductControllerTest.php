@@ -2,10 +2,12 @@
 
 namespace App\Tests\Application\Product\Controller;
 
+use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
 use App\Security\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -53,5 +55,49 @@ class ProductControllerTest extends WebTestCase
         $this->assertSelectorTextContains('html', $this->translator->trans('save'));
         $this->assertSelectorTextContains('html', $this->translator->trans('back_to_list'));
         $this->assertSame('product', $productForm->getAttribute('name'));
+    }
+
+    public function testCreateProduct(): void
+    {
+        $casualUser = $this->userRepository->findOneBy(['username' => 'casual_user']);
+        $this->client->loginUser($casualUser);
+
+        $crawler = $this->client->request('GET', '/product/new');
+
+        $formButton = $crawler->selectButton($this->translator->trans('save'));
+        $form = $formButton->form();
+
+        $productData = $this->getProductData();
+
+        $form['product[name]'] = $productData['name'];
+        $form['product[description]'] = $productData['description'];
+        $form['product[auctionPrice]'] = $productData['auctionPrice'];
+        $form['product[buyNowPrice]'] = $productData['buyNowPrice'];
+        $form['product[saleType]'] = $productData['saleType'];
+
+        $productsCount = $this->productRepository->count([]);
+
+        $this->client->submit($form);
+
+        $lastProduct = $this->productRepository->findOneBy([], ['id' => 'DESC']);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_SEE_OTHER);
+        $this->assertSame($this->productRepository->count([]), $productsCount + 1);
+        $this->assertSame($lastProduct->getName(), $productData['name']);
+        $this->assertSame($lastProduct->getDescription(), $productData['description']);
+        $this->assertSame($lastProduct->getAuctionPrice(), $productData['auctionPrice']);
+        $this->assertSame($lastProduct->getBuyNowPrice(), $productData['buyNowPrice']);
+        $this->assertSame($lastProduct->getSaleType(), (int) $productData['saleType']);
+    }
+
+    private function getProductData(): array
+    {
+        return [
+            'name' => 'Test Name',
+            'description' => 'Test Description',
+            'auctionPrice' => 100.0,
+            'buyNowPrice' => 200.0,
+            'saleType' => (string) SaleTypeEnum::BOTH->value,
+        ];
     }
 }
