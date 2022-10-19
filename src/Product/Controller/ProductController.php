@@ -22,7 +22,7 @@ class ProductController extends AbstractController
         $saleCases = HashTable::getHashTableFromEnum(SaleTypeEnum::cases(), 'name');
 
         return $this->render('product/product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findBy([], ['id' => 'DESC']),
             'saleTypeEnum' => $saleCases,
         ]);
     }
