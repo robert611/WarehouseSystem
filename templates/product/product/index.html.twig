@@ -35,6 +35,9 @@
                                     data-bs-target="#add-product-picture-modal" data-endpoint="{{ path('app_product_picture_new', {product: product.id}) }}">
                                 {{ 'add_picture'|trans|capitalize }}
                             </button>
+                            {% if 'ROLE_ADMIN' in app.user.roles or app.user is same as(product.user) %}
+                                {{ include('product/product/_delete_form.html.twig') }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-12">
