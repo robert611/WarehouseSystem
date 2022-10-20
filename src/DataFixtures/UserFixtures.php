@@ -33,8 +33,15 @@ class UserFixtures extends Fixture
         $casualUser->setPassword($this->hasher->hashPassword($adminUser, 'casual_user'));
         $casualUser->setRoles(['ROLE_USER']);
 
+        $userWithoutProducts = new User();
+        $userWithoutProducts->setUsername('user_without_products');
+        $userWithoutProducts->setEmail('user_without_products@gmail.com');
+        $userWithoutProducts->setPassword($this->hasher->hashPassword($adminUser, 'user_without_products'));
+        $userWithoutProducts->setRoles(['ROLE_USER']);
+
         $manager->persist($adminUser);
         $manager->persist($casualUser);
+        $manager->persist($userWithoutProducts);
         $manager->flush();
 
         $this->addReference(self::ADMIN_USER_REFERENCE, $adminUser);

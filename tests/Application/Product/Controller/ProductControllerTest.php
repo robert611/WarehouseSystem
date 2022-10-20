@@ -90,6 +90,35 @@ class ProductControllerTest extends WebTestCase
         $this->assertSame($lastProduct->getSaleType(), (int) $productData['saleType']);
     }
 
+    public function testDelete(): void
+    {
+        $adminUser = $this->userRepository->findOneBy(['username' => 'admin']);
+        $this->client->loginUser($adminUser);
+
+        $crawler = $this->client->request('GET', '/product/');
+
+        $productsCount = $this->productRepository->count([]);
+
+        $formButton = $crawler->selectButton($this->translator->trans('delete'));
+        $this->client->submit($formButton->form());
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_SEE_OTHER);
+        $this->assertSame($this->productRepository->count([]), $productsCount - 1);
+    }
+
+    public function testForUnAuthorizedDeletion(): void
+    {
+        $userWithoutProducts = $this->userRepository->findOneBy(['username' => 'user_without_products']);
+        $this->client->loginUser($userWithoutProducts);
+
+        $product = $this->productRepository->findOneBy([]);
+        $productsCount = $this->productRepository->count([]);
+
+        $this->client->request('POST', '/product/' . $product->getId());
+
+        $this->assertSame($this->productRepository->count([]), $productsCount);
+    }
+
     private function getProductData(): array
     {
         return [
