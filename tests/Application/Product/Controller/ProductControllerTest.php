@@ -70,12 +70,13 @@ class ProductControllerTest extends WebTestCase
         $form = $formButton->form();
 
         $productData = $this->getProductData();
-
-        $form['product[name]'] = $productData['name'];
-        $form['product[description]'] = $productData['description'];
-        $form['product[auctionPrice]'] = $productData['auctionPrice'];
-        $form['product[buyNowPrice]'] = $productData['buyNowPrice'];
-        $form['product[saleType]'] = $productData['saleType'];
+        $form->setValues(['product' => [
+            'name' => $productData['name'],
+            'description' => $productData['description'],
+            'auctionPrice' => $productData['auctionPrice'],
+            'buyNowPrice' => $productData['buyNowPrice'],
+            'saleType' => $productData['saleType'],
+        ]]);
 
         $productsCount = $this->productRepository->count([]);
 
@@ -121,6 +122,7 @@ class ProductControllerTest extends WebTestCase
         $this->assertSame($this->productRepository->count([]), $productsCount);
     }
 
+    /** @return array{name: string, description: string, auctionPrice: float, buyNowPrice: float, saleType: string} */
     private function getProductData(): array
     {
         return [
