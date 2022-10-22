@@ -59,8 +59,10 @@ class ProductPictureControllerTest extends WebTestCase
         $formButton = $crawler->selectButton($this->translator->trans('save'));
         $form = $formButton->form();
 
-        $form['product_picture[type]'] = $this->productPictureTypeRepository->findOneBy([])->getId();
-        $form['product_picture[path]']->upload($this->testImage);
+        $form->setValues(['product_picture' => [
+            'type' => $this->productPictureTypeRepository->findOneBy([])->getId()]
+        ]);
+        $form['product_picture[path]'] = $this->testImage;
 
         $productPicturesCount = $product->getProductPictures()->count();
 

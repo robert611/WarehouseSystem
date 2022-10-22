@@ -1,0 +1,8 @@
+parameters:
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        -
+          message: '#Property [a-zA-Z0-9\\_]+::\$id is never written, only read.#'
+          paths:
+           - src/Product/Entity/*
+           - src/Security/Entity/*

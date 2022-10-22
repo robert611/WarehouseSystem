@@ -39,7 +39,7 @@ class Product
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private User $user;
+    private User|UserInterface $user;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductPicture::class, orphanRemoval: true)]
     private Collection $productPictures;
@@ -134,7 +134,7 @@ class Product
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): User|UserInterface
     {
         return $this->user;
     }
