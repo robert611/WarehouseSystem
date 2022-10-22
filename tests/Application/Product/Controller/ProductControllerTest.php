@@ -5,6 +5,7 @@ namespace App\Tests\Application\Product\Controller;
 use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
 use App\Security\Repository\UserRepository;
+use DOMElement;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +50,7 @@ class ProductControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/product/new');
 
+        /** @var DOMElement $productForm */
         $productForm = $crawler->filter('#product-form')->getNode(0);
 
         $this->assertResponseIsSuccessful();
