@@ -22,6 +22,10 @@ main {
     display: none;
 }
 
+.text-justify {
+    text-align: justify;
+}
+
 @media only screen and (max-width: 600px){
     #side-navbar {
         display: none!important;
