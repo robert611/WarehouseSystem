@@ -51,8 +51,11 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
+        $saleCases = HashTable::getHashTableFromEnum(SaleTypeEnum::cases(), 'value');
+
         return $this->render('product/product/show.html.twig', [
             'product' => $product,
+            'saleCases' => $saleCases,
         ]);
     }
 

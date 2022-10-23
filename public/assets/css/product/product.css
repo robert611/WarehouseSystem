@@ -1,3 +1,7 @@
 .product-picture {
     max-height: 165px;
 }
+
+.product-show-action-picture {
+    max-height: 250px;
+}

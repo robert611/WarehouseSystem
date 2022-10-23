@@ -33,6 +33,9 @@
                         </div>
                         <div class="clear-both"></div>
                         <div class="mx-md-3">
+                            <a href="{{ path('app_product_show', {id: product.id}) }}" class="btn btn-outline-success">
+                                {{ 'show'|trans|capitalize }}
+                            </a>
                             <button class="btn btn-outline-info">{{ 'edit'|trans|capitalize }}</button>
                             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
                                     data-bs-target="#add-product-picture-modal" data-endpoint="{{ path('app_product_picture_new', {product: product.id}) }}">
