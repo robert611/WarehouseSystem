@@ -2,6 +2,7 @@
 
 namespace App\Tests\Application\Product\Controller;
 
+use App\Product\Model\Dictionary\SaleTypeDictionary;
 use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
 use App\Security\Repository\UserRepository;
@@ -88,6 +89,28 @@ class ProductControllerTest extends WebTestCase
         $this->assertSame($lastProduct->getAuctionPrice(), $productData['auctionPrice']);
         $this->assertSame($lastProduct->getBuyNowPrice(), $productData['buyNowPrice']);
         $this->assertSame($lastProduct->getSaleType(), (int) $productData['saleType']);
+    }
+
+    public function testShow(): void
+    {
+        $casualUser = $this->userRepository->findOneBy(['username' => 'casual_user']);
+        $this->client->loginUser($casualUser);
+
+        $firstProduct = $this->productRepository->findOneBy([], ['id' => 'DESC']);
+
+        $this->client->request('GET', '/product/' . $firstProduct->getId());
+
+        $saleTypeTranslation = $this->translator->trans(
+            SaleTypeDictionary::translateToString($firstProduct->getSaleType())
+        );
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', $firstProduct->getName());
+        $this->assertSelectorTextContains('#product-description-section > p', $firstProduct->getDescription());
+        $this->assertSelectorTextContains('#product-other-info-section', $firstProduct->getCreatedAt()->format('Y-m-d H:i:s'));
+        $this->assertSelectorTextContains('#product-other-info-section', $firstProduct->getBuyNowPrice());
+        $this->assertSelectorTextContains('#product-other-info-section', $firstProduct->getAuctionPrice());
+        $this->assertSelectorTextContains('#product-other-info-section', $saleTypeTranslation);
     }
 
     public function testDelete(): void
