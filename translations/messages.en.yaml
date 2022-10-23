@@ -23,3 +23,8 @@ type: Type
 add_product: Add Product
 edit: Edit
 delete: Delete
+show: Show
+pictures: Pictures
+parameters: Parameters
+other_information: Other information
+created_at: Creation Date

@@ -19,9 +19,9 @@
                             <img src="https://m.media-amazon.com/images/I/51-yE2RJpbL._AC_SY780_.jpg" alt="Product Picture"
                                  class="img-fluid product-picture">
                         </div>
-                        <div class="float-start mx-md-3">
+                        <div class="mx-md-3">
                             <b>{{ product.name }}</b>
-                            <p>{{ product.description }}</p>
+                            <p class="text-justify">{{ product.description }}</p>
                             <p>
                                 {% if product.saleType in [saleTypeEnum.AUCTION.value, saleTypeEnum.BOTH.value] %}
                                     Licytacja: {{ product.auctionPrice }} zł <br>
@@ -30,6 +30,12 @@
                                     Kup Teraz: {{ product.buyNowPrice }} zł
                                 {% endif %}
                             </p>
+                        </div>
+                        <div class="clear-both"></div>
+                        <div class="mx-md-3">
+                            <a href="{{ path('app_product_show', {id: product.id}) }}" class="btn btn-outline-success">
+                                {{ 'show'|trans|capitalize }}
+                            </a>
                             <button class="btn btn-outline-info">{{ 'edit'|trans|capitalize }}</button>
                             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
                                     data-bs-target="#add-product-picture-modal" data-endpoint="{{ path('app_product_picture_new', {product: product.id}) }}">

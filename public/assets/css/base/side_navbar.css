@@ -43,7 +43,7 @@
 }
 
 #side-navbar {
-    position: absolute;
+    position: fixed;
     top: 80px;
     bottom: 0;
     overflow-x: hidden;

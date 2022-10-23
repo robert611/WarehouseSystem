@@ -18,7 +18,7 @@ class ProductPicture
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productPictures')]
     #[ORM\JoinColumn(nullable: false)]
-    private Product $product;
+    private ?Product $product;
 
     #[ORM\ManyToOne(targetEntity: ProductPictureType::class)]
     #[ORM\JoinColumn(nullable: false)]

@@ -1,46 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/product/product.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Product</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ product.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>AuctionPrice</th>
-                <td>{{ product.auctionPrice }}</td>
-            </tr>
-            <tr>
-                <th>BuyNowPrice</th>
-                <td>{{ product.buyNowPrice }}</td>
-            </tr>
-            <tr>
-                <th>SaleType</th>
-                <td>{{ product.saleType }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_product_index') }}">back to list</a>
-
-    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-
-    {{ include('product/product/_delete_form.html.twig') }}
+<article class="container-fluid mt-4 pe-4 px-4 mb-4">
+    <h1>{{ product.name }}</h1>
+    <hr>
+    <section class="mb-4" id="product-pictures-section">
+        <h3 class="mb-4">{{ "pictures"|trans|capitalize }}</h3>
+        <div class="row">
+            {% for picture in product.productPictures %}
+                <div class="col">
+                    <img src="{{ asset('assets/images/product_pictures/'~picture.path) }}"
+                         class="img-fluid product-show-action-picture" alt="Product Picture">
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <hr>
+    <section class="mb-4" id="product-description-section">
+        <h3 class="mb-4">{{ "Description"|trans|capitalize }}</h3>
+        <p>{{ product.description }}</p>
+    </section>
+    <hr>
+    <section class="mb-4" id="product-parameters-section">
+        <h3 class="mb-4">{{ "parameters"|trans|capitalize }}</h3>
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Wartość</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Waga</td>
+                    <td>100 kg</td>
+                </tr>
+                <tr>
+                    <td>Kolor</td>
+                    <td>Niebieski</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <hr>
+    <section class="mb-4" id="product-other-info-section">
+        <h3 class="mb-4">{{ "other_information"|trans|capitalize }}</h3>
+        <div class="row">
+            <div class="col">
+                {{ "Auction price"|trans|capitalize }}: {{ product.auctionPrice }}
+            </div>
+            <div class="col">
+                {{ "Buy now price"|trans|capitalize }}: {{ product.buyNowPrice }}
+            </div>
+            <div class="col">
+                {{ "Sale type"|trans|capitalize }}: {{ saleCases[product.saleType].name|trans }}
+            </div>
+            <div class="col">
+                {{ "created_at"|trans|capitalize }}: {{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}
+            </div>
+        </div>
+    </section>
+    <a class="btn btn-outline-info mt-4" href="{{ path('app_product_index') }}">{{ 'back_to_list'|trans|raw }}</a>
+</article>
 {% endblock %}

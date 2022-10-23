@@ -23,3 +23,8 @@ type: Typ
 add_product: Dodaj Produkt
 edit: Edytuj
 delete: Usuń
+show: Pokaż
+pictures: Zdjęcia
+parameters: Parametry
+other_information: Pozostałe informacje
+created_at: Data Utworzenia
