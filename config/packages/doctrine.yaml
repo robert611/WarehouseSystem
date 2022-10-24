@@ -22,6 +22,12 @@ doctrine:
                 prefix: 'App\Product\Entity'
                 alias: App
                 type: attribute
+            App\Warehouse:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Warehouse/Entity'
+                prefix: 'App\Warehouse\Entity'
+                alias: App
+                type: attribute
 #            App:
 #                is_bundle: false
 #                dir: '%kernel.project_dir%/src/Entity'
