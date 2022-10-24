@@ -5,6 +5,7 @@ namespace App\Product\Entity;
 use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
 use App\Security\Entity\User;
+use App\Warehouse\Entity\WarehouseItem;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -47,10 +48,14 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductParameter::class, orphanRemoval: true)]
     private Collection $productParameters;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: WarehouseItem::class)]
+    private $warehouseItems;
+
     public function __construct()
     {
         $this->productPictures = new ArrayCollection();
         $this->productParameters = new ArrayCollection();
+        $this->warehouseItems = new ArrayCollection();
     }
 
     public function getId(): int
@@ -200,6 +205,36 @@ class Product
             // set the owning side to null (unless already changed)
             if ($productParameter->getProduct() === $this) {
                 $productParameter->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WarehouseItem>
+     */
+    public function getWarehouseItems(): Collection
+    {
+        return $this->warehouseItems;
+    }
+
+    public function addWarehouseItem(WarehouseItem $warehouseItem): self
+    {
+        if (!$this->warehouseItems->contains($warehouseItem)) {
+            $this->warehouseItems[] = $warehouseItem;
+            $warehouseItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWarehouseItem(WarehouseItem $warehouseItem): self
+    {
+        if ($this->warehouseItems->removeElement($warehouseItem)) {
+            // set the owning side to null (unless already changed)
+            if ($warehouseItem->getProduct() === $this) {
+                $warehouseItem->setProduct(null);
             }
         }
 

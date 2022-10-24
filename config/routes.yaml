@@ -9,3 +9,7 @@ security_controllers:
 product_controllers:
     resource: ../src/Product/Controller/
     type: attribute
+
+warehouse_controllers:
+    resource: ../src/Warehouse/Controller/
+    type: attribute
