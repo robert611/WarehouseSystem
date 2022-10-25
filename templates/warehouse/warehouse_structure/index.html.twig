@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <div class="container-fluid mt-5">
+        {{ render(controller('App\\Warehouse\\Controller\\WarehouseStructureController::new')) }}
+    </div>
 {% endblock %}
