@@ -26,7 +26,7 @@ const product = {
             'method': 'POST',
             'body': new FormData(form),
         })
-            .then(response =>  {
+            .then(response => {
                 if (response.ok === false) {
                     throw new Error('Ups. Coś poszło nie tak podczas zapisywania zdjęcia.');
                 }

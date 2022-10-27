@@ -5,3 +5,8 @@
         {{ render(controller('App\\Warehouse\\Controller\\WarehouseStructureController::new')) }}
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="module" src="{{ asset('assets/js/warehouse/warehouse_structure.js') }}"></script>
+{% endblock %}

@@ -20,11 +20,13 @@ class WarehouseStructureController extends AbstractController
         return $this->render('warehouse/warehouse_structure/index.html.twig');
     }
 
-    #[Route('/', name: 'app_warehouse_structure_index', methods: ['GET, POST'])]
+    #[Route('/new', name: 'app_warehouse_structure_new', methods: ['GET', 'POST'])]
     public function new(Request $request, WarehouseStructureTreeRepository $warehouseStructureTreeRepository): Response
     {
         $warehouseStructure = new WarehouseStructureTree();
-        $form = $this->createForm(WarehouseStructureType::class, $warehouseStructure);
+        $form = $this->createForm(WarehouseStructureType::class, $warehouseStructure, [
+            'action' => $this->generateUrl('app_warehouse_structure_new'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
