@@ -22,6 +22,9 @@ class WarehouseStructureTree
     #[ORM\ManyToOne(targetEntity: self::class)]
     private ?WarehouseStructureTree $parent;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $treePath;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class WarehouseStructureTree
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getTreePath(): string
+    {
+        return $this->treePath;
+    }
+
+    public function setTreePath(string $treePath): self
+    {
+        $this->treePath = $treePath;
 
         return $this;
     }
