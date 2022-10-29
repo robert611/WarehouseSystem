@@ -14,14 +14,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/warehouse/structure')]
 class WarehouseStructureController extends AbstractController
 {
+    private WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
+
+    public function __construct(WarehouseStructureTreeRepository $warehouseStructureTreeRepository)
+    {
+        $this->warehouseStructureTreeRepository = $warehouseStructureTreeRepository;
+    }
+
     #[Route('/', name: 'app_warehouse_structure_index', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('warehouse/warehouse_structure/index.html.twig');
+        return $this->render('warehouse/warehouse_structure/index.html.twig', [
+            'treeElements' => $this->warehouseStructureTreeRepository->findWithoutParent(),
+        ]);
     }
 
     #[Route('/new', name: 'app_warehouse_structure_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, WarehouseStructureTreeRepository $warehouseStructureTreeRepository): Response
+    public function new(Request $request): Response
     {
         $warehouseStructure = new WarehouseStructureTree();
         $form = $this->createForm(WarehouseStructureType::class, $warehouseStructure, [
@@ -32,14 +41,15 @@ class WarehouseStructureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $parentId = $request->request->get('parentId');
             if ($parentId) {
-                $parent = $warehouseStructureTreeRepository->find($parentId);
+                $parent = $this->warehouseStructureTreeRepository->find($parentId);
             }
 
+            $warehouseStructure->setName(strtoupper($form->getData()->getName()));
             $warehouseStructure->setParent($parent ?? null);
             $warehouseStructure->setIsLeaf(false);
             $warehouseStructure->setTreePath(isset($parent) ? $parent->getTreePath() : '' . $warehouseStructure->getName());
 
-            $warehouseStructureTreeRepository->add($warehouseStructure, true);
+            $this->warehouseStructureTreeRepository->add($warehouseStructure, true);
 
             return new JsonResponse(['error' => false]);
         }

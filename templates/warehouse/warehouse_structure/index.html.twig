@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/warehouse/structure.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="container-fluid mt-5">
+        {{ include('warehouse/warehouse_structure/_grid_display.html.twig') }}
         {{ render(controller('App\\Warehouse\\Controller\\WarehouseStructureController::new')) }}
     </div>
 {% endblock %}
