@@ -7,8 +7,12 @@
                         <div class="card-materialize-content text-center">
                             <h4 class="text-center">{{ element.name }}</h4>
                             <div>
-                                <button class="btn btn-outline-success warehouse-open-button mb-1">Otwórz</button>
-                                <button class="btn btn-outline-info warehouse-set-leaf-button mb-1">Ustaw jako pojemnik</button>
+                                <button class="btn btn-outline-success warehouse-open-button mb-1" data-nodeId="{{ element.id }}">
+                                    Otwórz
+                                </button>
+                                <button class="btn btn-outline-info warehouse-set-leaf-button mb-1">
+                                    Ustaw jako pojemnik
+                                </button>
                             </div>
                             <div>
                                 <button class="btn btn-outline-warning warehouse-block-button mb-1">Zablokuj</button>
