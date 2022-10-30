@@ -1,15 +1,132 @@
-.width-58 {
+.warehouse-set-leaf-button {
     width: 58%;
+    overflow: hidden;
 }
 
-.width-54 {
+.warehouse-block-button {
     width: 54%;
+    overflow: hidden;
 }
 
-.width-44 {
+.warehouse-delete-button {
     width: 44%;
+    overflow: hidden;
 }
 
-.width-40 {
+.warehouse-open-button {
     width: 40%;
+    overflow: hidden;
+}
+
+@media (min-width: 1501px) and (max-width: 1850px) {
+    .warehouse-open-button {
+        width: 70%;
+    }
+
+    .warehouse-set-leaf-button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1126px) and (max-width: 1500px) {
+    .warehouse-open-button {
+        width: 70%;
+    }
+
+    .warehouse-set-leaf-button {
+        width: 100%;
+    }
+
+    .warehouse-block-button {
+        width: 70%;
+        overflow: hidden;
+    }
+
+    .warehouse-delete-button {
+        width: 60%;
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1125px) {
+    .warehouse-structure-card {
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: auto;
+        width: 50%;
+    }
+
+    .warehouse-open-button {
+        width: 70%;
+    }
+
+    .warehouse-set-leaf-button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+    .warehouse-open-button {
+        width: 100%;
+    }
+
+    .warehouse-set-leaf-button {
+        width: 100%;
+    }
+
+    .warehouse-block-button {
+        width: 100%;
+    }
+
+    .warehouse-delete-button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 600px) {
+    .warehouse-open-button {
+        width: 70%;
+    }
+
+    .warehouse-set-leaf-button {
+        width: 100%;
+    }
+
+    .warehouse-block-button {
+        width: 70%;
+        overflow: hidden;
+    }
+
+    .warehouse-delete-button {
+        width: 60%;
+        overflow: hidden;
+    }
+}
+
+@media (min-width: 253px) and (max-width: 382px) {
+    .warehouse-open-button {
+        width: 70%;
+    }
+
+    .warehouse-set-leaf-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 252px) {
+    .warehouse-open-button {
+        width: 100%;
+    }
+
+    .warehouse-set-leaf-button {
+        width: 100%;
+    }
+
+    .warehouse-block-button {
+        width: 100%;
+    }
+
+    .warehouse-delete-button {
+        width: 100%;
+    }
 }
