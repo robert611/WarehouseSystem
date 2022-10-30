@@ -12,6 +12,7 @@
                 }}
                 {{ form_errors(form.name) }}
             </div>
+            {{ form_widget(form.parentId, {'attr': {'value': parentId ?? ''}}) }}
             <button class="btn btn-outline-success">{{ button_label|default('save')|trans|raw }}</button>
         {{ form_end(form) }}
     </div>

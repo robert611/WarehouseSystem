@@ -52,12 +52,13 @@ class WarehouseStructureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $parentId = $request->request->get('parentId');
+            $formData = $form->getData();
+            $parentId = $request->request->all('warehouse_structure')['parentId'];
             if ($parentId) {
                 $parent = $this->warehouseStructureTreeRepository->find($parentId);
             }
 
-            $warehouseStructure->setName(strtoupper($form->getData()->getName()));
+            $warehouseStructure->setName(strtoupper($formData->getName()));
             $warehouseStructure->setParent($parent ?? null);
             $warehouseStructure->setIsLeaf(false);
             $warehouseStructure->setTreePath(isset($parent) ? $parent->getTreePath() : '' . $warehouseStructure->getName());
@@ -69,6 +70,7 @@ class WarehouseStructureController extends AbstractController
 
         return $this->render('warehouse/warehouse_structure/new.html.twig', [
             'form' => $form->createView(),
+            'parentId' => $request->get('parentId'),
         ]);
     }
 }
