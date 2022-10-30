@@ -38,4 +38,12 @@ class WarehouseStructureTreeRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findWithoutParent(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.parent is null')
+            ->getQuery()
+            ->getResult();
+    }
 }

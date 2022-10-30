@@ -1,0 +1,6 @@
+<div>
+    {{ include('warehouse/warehouse_structure/_grid_display.html.twig') }}
+    {{ render(controller('App\\Warehouse\\Controller\\WarehouseStructureController::new', {
+        parentId: parent is defined ? parent.id : null
+    })) }}
+</div>

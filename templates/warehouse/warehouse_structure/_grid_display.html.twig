@@ -1,0 +1,27 @@
+{% for row in treeElements|batch(4) %}
+    <div class="row">
+        {% for element in row %}
+            <div class="col-xs-12 col-sm-6 col-md-3 warehouse-structure-card">
+                <div class="card-materialize">
+                    <div class="card-materialize-stacked">
+                        <div class="card-materialize-content text-center">
+                            <h4 class="text-center">{{ element.name }}</h4>
+                            <div>
+                                <button class="btn btn-outline-success warehouse-open-button mb-1" data-nodeId="{{ element.id }}">
+                                    Otwórz
+                                </button>
+                                <button class="btn btn-outline-info warehouse-set-leaf-button mb-1">
+                                    Ustaw jako pojemnik
+                                </button>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-warning warehouse-block-button mb-1">Zablokuj</button>
+                                <button class="btn btn-outline-danger warehouse-delete-button mb-1">Usuń</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}

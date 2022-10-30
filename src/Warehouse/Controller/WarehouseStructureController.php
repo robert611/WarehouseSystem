@@ -14,14 +14,36 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/warehouse/structure')]
 class WarehouseStructureController extends AbstractController
 {
+    private WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
+
+    public function __construct(WarehouseStructureTreeRepository $warehouseStructureTreeRepository)
+    {
+        $this->warehouseStructureTreeRepository = $warehouseStructureTreeRepository;
+    }
+
     #[Route('/', name: 'app_warehouse_structure_index', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('warehouse/warehouse_structure/index.html.twig');
+        return $this->render('warehouse/warehouse_structure/index.html.twig', [
+            'treeElements' => $this->warehouseStructureTreeRepository->findWithoutParent(),
+        ]);
+    }
+
+    #[Route('/open/{id}', name: 'app_warehouse_structure_open', methods: ['GET'])]
+    public function open(WarehouseStructureTree $element): Response
+    {
+        if ($element->isLeaf()) {
+            return $this->render('');
+        }
+
+        return $this->render('warehouse/warehouse_structure/_node.html.twig', [
+            'parent' => $element,
+            'treeElements' => $this->warehouseStructureTreeRepository->findBy(['parent' => $element]),
+        ]);
     }
 
     #[Route('/new', name: 'app_warehouse_structure_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, WarehouseStructureTreeRepository $warehouseStructureTreeRepository): Response
+    public function new(Request $request): Response
     {
         $warehouseStructure = new WarehouseStructureTree();
         $form = $this->createForm(WarehouseStructureType::class, $warehouseStructure, [
@@ -30,22 +52,25 @@ class WarehouseStructureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $parentId = $request->request->get('parentId');
+            $formData = $form->getData();
+            $parentId = $request->request->all('warehouse_structure')['parentId'];
             if ($parentId) {
-                $parent = $warehouseStructureTreeRepository->find($parentId);
+                $parent = $this->warehouseStructureTreeRepository->find($parentId);
             }
 
+            $warehouseStructure->setName(strtoupper($formData->getName()));
             $warehouseStructure->setParent($parent ?? null);
             $warehouseStructure->setIsLeaf(false);
             $warehouseStructure->setTreePath(isset($parent) ? $parent->getTreePath() : '' . $warehouseStructure->getName());
 
-            $warehouseStructureTreeRepository->add($warehouseStructure, true);
+            $this->warehouseStructureTreeRepository->add($warehouseStructure, true);
 
             return new JsonResponse(['error' => false]);
         }
 
         return $this->render('warehouse/warehouse_structure/new.html.twig', [
             'form' => $form->createView(),
+            'parentId' => $request->get('parentId'),
         ]);
     }
 }
