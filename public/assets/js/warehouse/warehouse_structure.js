@@ -38,9 +38,7 @@ const warehouseStructure = {
             });
     },
     openNode: function (event) {
-        const nodeId = event.target.getAttribute('data-nodeId');
-        const rawEndpoint = document.getElementById('warehouse-structure-open-endpoint').value;
-        const endpoint = rawEndpoint.replace('fileId', nodeId)
+        const endpoint = event.target.getAttribute('data-endpoint');
 
         fetch(endpoint)
             .then(response => {

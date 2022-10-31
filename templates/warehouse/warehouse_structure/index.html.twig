@@ -6,12 +6,10 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-5 mb-5">
         {{ include('warehouse/warehouse_structure/_grid_display.html.twig') }}
         {{ render(controller('App\\Warehouse\\Controller\\WarehouseStructureController::new')) }}
     </div>
-
-    <input type="hidden" id="warehouse-structure-open-endpoint" value="{{ path('app_warehouse_structure_open', {id: 'fileId'}) }}">
 {% endblock %}
 
 {% block javascripts %}
