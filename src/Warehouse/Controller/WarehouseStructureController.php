@@ -24,21 +24,29 @@ class WarehouseStructureController extends AbstractController
     #[Route('/', name: 'app_warehouse_structure_index', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('warehouse/warehouse_structure/index.html.twig', [
+        return $this->render('warehouse/warehouse_structure/index.html.twig');
+    }
+
+    #[Route('/open/root', name: 'app_warehouse_structure_open_root', methods: ['GET'])]
+    public function openRoot(): Response
+    {
+        return $this->render('warehouse/warehouse_structure/_grid_display.html.twig', [
             'treeElements' => $this->warehouseStructureTreeRepository->findWithoutParent(),
         ]);
     }
 
-    #[Route('/open/{id}', name: 'app_warehouse_structure_open', methods: ['GET'])]
-    public function open(WarehouseStructureTree $element): Response
+    #[Route('/open/leaf/{id}', name: 'app_warehouse_structure_open_leaf', methods: ['GET'])]
+    public function openLeaf(WarehouseStructureTree $node): Response
     {
-        if ($element->isLeaf()) {
-            return $this->render('');
-        }
+        return $this->render('');
+    }
 
-        return $this->render('warehouse/warehouse_structure/_node.html.twig', [
-            'parent' => $element,
-            'treeElements' => $this->warehouseStructureTreeRepository->findBy(['parent' => $element]),
+    #[Route('/open/{id}', name: 'app_warehouse_structure_open', methods: ['GET'])]
+    public function open(WarehouseStructureTree $node): Response
+    {
+        return $this->render('warehouse/warehouse_structure/_grid_display.html.twig', [
+            'parent' => $node,
+            'treeElements' => $this->warehouseStructureTreeRepository->findBy(['parent' => $node]),
         ]);
     }
 
@@ -53,13 +61,7 @@ class WarehouseStructureController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
-            $parentId = $request->request->all('warehouse_structure')['parentId'];
-            if ($parentId) {
-                $parent = $this->warehouseStructureTreeRepository->find($parentId);
-            }
-
             $warehouseStructure->setName(strtoupper($formData->getName()));
-            $warehouseStructure->setParent($parent ?? null);
             $warehouseStructure->setIsLeaf(false);
             $warehouseStructure->setTreePath(isset($parent) ? $parent->getTreePath() : '' . $warehouseStructure->getName());
 

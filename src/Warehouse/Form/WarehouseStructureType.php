@@ -3,8 +3,8 @@
 namespace App\Warehouse\Form;
 
 use App\Warehouse\Entity\WarehouseStructureTree;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,8 +17,11 @@ class WarehouseStructureType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nazwa (Maksymalnie dwie duże litery bądź cyfry)',
             ])
-            ->add('parentId', HiddenType::class, [
-                'mapped' => false,
+            ->add('parent', EntityType::class, [
+                'class' => WarehouseStructureTree::class,
+                'attr' => [
+                    'class' => 'd-none',
+                ],
                 'required' => false,
             ]);
     }
