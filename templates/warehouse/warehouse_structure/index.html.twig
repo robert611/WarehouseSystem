@@ -8,13 +8,15 @@
 {% block body %}
     <div class="container-fluid mt-5 mb-5">
         <div id="warehouse-nodes-grid-display-container">
-            {{ include('warehouse/warehouse_structure/_grid_display.html.twig') }}
+            {{ render(controller('App\\Warehouse\\Controller\\WarehouseStructureController::openRoot')) }}
         </div>
         <div id="warehouse-new-form-container">
             {{ render(controller('App\\Warehouse\\Controller\\WarehouseStructureController::new')) }}
         </div>
     </div>
     <input type="hidden" id="warehouse-structure-new-form-endpoint" value="{{ path('app_warehouse_structure_new') }}">
+    <input type="hidden" id="warehouse-structure-open-root-endpoint" value="{{ path('app_warehouse_structure_open_root') }}">
+    <input type="hidden" id="warehouse-structure-open-endpoint" value="{{ path('app_warehouse_structure_open', {'id': 'nodeId'}) }}">
 {% endblock %}
 
 {% block javascripts %}

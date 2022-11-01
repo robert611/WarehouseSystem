@@ -33,6 +33,10 @@ const warehouseStructure = {
                     throw new Error('Ups. Coś poszło nie tak podczas tworzenia elementu struktury.');
                 }
             })
+            .then(() => {
+                const endpoint = warehouseStructure.getOpenNodeEndpoint(form['warehouse_structure[parent]'].value);
+                warehouseStructure.refreshNodesList(endpoint);
+            })
             .catch(error => {
                 form.appendChild(alertUtil.createAlertWidget('danger', error));
             });
@@ -42,22 +46,11 @@ const warehouseStructure = {
         const nodeId = button.getAttribute('data-nodeId');
         const endpoint = event.target.getAttribute('data-endpoint');
 
-        fetch(endpoint)
-            .then(response => {
-                if (response.ok === false) {
-                    throw new Error('Ups. Coś poszło nie tak podczas otwierania elementu struktury.');
-                }
+        const refreshNodesList = warehouseStructure.refreshNodesList(endpoint);
 
-                return response.text();
-            })
-            .then((response) => {
-               document.getElementById('warehouse-nodes-grid-display-container').innerHTML = response;
-            })
+        refreshNodesList
             .then(async () => {
                 await warehouseStructure.renderNewForm(nodeId);
-            })
-            .then(() => {
-                warehouseStructure.initEventListeners();
             })
             .catch(error => {
                 alert(error);
@@ -80,6 +73,32 @@ const warehouseStructure = {
             .then(() => {
                 warehouseStructure.initEventListeners();
             });
+    },
+    refreshNodesList: function (endpoint) {
+        return fetch(endpoint)
+            .then(response => {
+                if (response.ok === false) {
+                    throw new Error('Ups. Coś poszło nie tak podczas otwierania elementu struktury.');
+                }
+
+                return response.text();
+            })
+            .then((response) => {
+                document.getElementById('warehouse-nodes-grid-display-container').innerHTML = response;
+            })
+            .then(() => {
+                warehouseStructure.initEventListeners();
+            });
+    },
+    getOpenNodeEndpoint: function (parentId) {
+        if (parentId) {
+            let endpoint = document.getElementById('warehouse-structure-open-endpoint').value;
+            endpoint = endpoint.replace('nodeId', parentId);
+
+            return endpoint;
+        }
+
+        return document.getElementById('warehouse-structure-open-root-endpoint').value;
     },
 }
 

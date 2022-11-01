@@ -24,9 +24,21 @@ class WarehouseStructureController extends AbstractController
     #[Route('/', name: 'app_warehouse_structure_index', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('warehouse/warehouse_structure/index.html.twig', [
+        return $this->render('warehouse/warehouse_structure/index.html.twig');
+    }
+
+    #[Route('/open/root', name: 'app_warehouse_structure_open_root', methods: ['GET'])]
+    public function openRoot(): Response
+    {
+        return $this->render('warehouse/warehouse_structure/_grid_display.html.twig', [
             'treeElements' => $this->warehouseStructureTreeRepository->findWithoutParent(),
         ]);
+    }
+
+    #[Route('/open/leaf/{id}', name: 'app_warehouse_structure_open_leaf', methods: ['GET'])]
+    public function openLeaf(WarehouseStructureTree $node): Response
+    {
+        return $this->render('');
     }
 
     #[Route('/open/{id}', name: 'app_warehouse_structure_open', methods: ['GET'])]
@@ -36,12 +48,6 @@ class WarehouseStructureController extends AbstractController
             'parent' => $node,
             'treeElements' => $this->warehouseStructureTreeRepository->findBy(['parent' => $node]),
         ]);
-    }
-
-    #[Route('/open/leaf/{id}', name: 'app_warehouse_structure_open_leaf', methods: ['GET'])]
-    public function openLeaf(WarehouseStructureTree $node): Response
-    {
-        return $this->render('');
     }
 
     #[Route('/new', name: 'app_warehouse_structure_new', methods: ['GET', 'POST'])]
