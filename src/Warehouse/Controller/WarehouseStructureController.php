@@ -32,7 +32,7 @@ class WarehouseStructureController extends AbstractController
     #[Route('/open/{id}', name: 'app_warehouse_structure_open', methods: ['GET'])]
     public function open(WarehouseStructureTree $node): Response
     {
-        return $this->render('warehouse/warehouse_structure/_node.html.twig', [
+        return $this->render('warehouse/warehouse_structure/_grid_display.html.twig', [
             'parent' => $node,
             'treeElements' => $this->warehouseStructureTreeRepository->findBy(['parent' => $node]),
         ]);
@@ -55,13 +55,7 @@ class WarehouseStructureController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
-            $parentId = $request->request->all('warehouse_structure')['parentId'];
-            if ($parentId) {
-                $parent = $this->warehouseStructureTreeRepository->find($parentId);
-            }
-
             $warehouseStructure->setName(strtoupper($formData->getName()));
-            $warehouseStructure->setParent($parent ?? null);
             $warehouseStructure->setIsLeaf(false);
             $warehouseStructure->setTreePath(isset($parent) ? $parent->getTreePath() : '' . $warehouseStructure->getName());
 

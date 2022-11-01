@@ -3,11 +3,11 @@ import alertUtil from '../utils/alert.js';
 const warehouseStructure = {
     initEventListeners: function () {
         const warehouseStructureForm = document.getElementById('warehouse-structure-form');
-        warehouseStructureForm.addEventListener('submit', this.createWarehouseStructureElement);
+        warehouseStructureForm.addEventListener('submit', warehouseStructure.createWarehouseStructureElement);
 
         const openNodeButtons = document.getElementsByClassName('warehouse-open-button');
         Array.from(openNodeButtons).forEach((button) => {
-            button.addEventListener('click', this.openNode);
+            button.addEventListener('click', warehouseStructure.openNode);
         });
     },
     createWarehouseStructureElement: function (event) {
@@ -38,6 +38,8 @@ const warehouseStructure = {
             });
     },
     openNode: function (event) {
+        const button = event.target;
+        const nodeId = button.getAttribute('data-nodeId');
         const endpoint = event.target.getAttribute('data-endpoint');
 
         fetch(endpoint)
@@ -49,11 +51,34 @@ const warehouseStructure = {
                 return response.text();
             })
             .then((response) => {
-               document.getElementsByClassName('container-fluid')[0].innerHTML = response;
-               warehouseStructure.initEventListeners();
+               document.getElementById('warehouse-nodes-grid-display-container').innerHTML = response;
+            })
+            .then(async () => {
+                await warehouseStructure.renderNewForm(nodeId);
+            })
+            .then(() => {
+                warehouseStructure.initEventListeners();
             })
             .catch(error => {
                 alert(error);
+            });
+    },
+    renderNewForm: function (nodeId) {
+        const endpoint = document.getElementById('warehouse-structure-new-form-endpoint').value;
+
+        fetch(endpoint)
+            .then(response => {
+                return response.text();
+            })
+            .then(response => {
+                document.getElementById('warehouse-new-form-container').innerHTML = response;
+            })
+            .then(() => {
+                const parentSelect = document.getElementById('warehouse_structure_parent');
+                parentSelect.value = nodeId;
+            })
+            .then(() => {
+                warehouseStructure.initEventListeners();
             });
     },
 }
