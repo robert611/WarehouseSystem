@@ -35,12 +35,6 @@ class WarehouseStructureController extends AbstractController
         ]);
     }
 
-    #[Route('/open/leaf/{id}', name: 'app_warehouse_structure_open_leaf', methods: ['GET'])]
-    public function openLeaf(WarehouseStructureTree $node): Response
-    {
-        return $this->render('');
-    }
-
     #[Route('/open/{id}', name: 'app_warehouse_structure_open', methods: ['GET'])]
     public function open(WarehouseStructureTree $node): Response
     {

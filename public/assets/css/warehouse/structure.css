@@ -1,4 +1,4 @@
-.warehouse-set-leaf-button {
+.warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
     width: 58%;
     overflow: hidden;
 }
@@ -23,7 +23,7 @@
         width: 70%;
     }
 
-    .warehouse-set-leaf-button {
+    .warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
         width: 100%;
     }
 }
@@ -33,7 +33,7 @@
         width: 70%;
     }
 
-    .warehouse-set-leaf-button {
+    .warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
         width: 100%;
     }
 
@@ -60,7 +60,7 @@
         width: 70%;
     }
 
-    .warehouse-set-leaf-button {
+    .warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
         width: 100%;
     }
 }
@@ -70,7 +70,7 @@
         width: 100%;
     }
 
-    .warehouse-set-leaf-button {
+    .warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
         width: 100%;
     }
 
@@ -88,7 +88,7 @@
         width: 70%;
     }
 
-    .warehouse-set-leaf-button {
+    .warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
         width: 100%;
     }
 
@@ -108,7 +108,7 @@
         width: 70%;
     }
 
-    .warehouse-set-leaf-button {
+    .warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
         width: 100%;
     }
 }
@@ -118,7 +118,7 @@
         width: 100%;
     }
 
-    .warehouse-set-leaf-button {
+    .warehouse-set-as-leaf-button, .warehouse-unset-as-leaf-button {
         width: 100%;
     }
 
