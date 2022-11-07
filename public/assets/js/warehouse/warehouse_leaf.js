@@ -1,6 +1,7 @@
 import {warehouseStructure} from "./warehouse_structure.js";
+import {eventListenersManager as warehouseEventListenersManager} from "./event_listeners_manager.js";
 
-const warehouseLeaf = {
+export const warehouseLeaf = {
     initEventListeners: function () {
         warehouseLeaf.initSetAsLeafButtons();
         warehouseLeaf.initUnsetAsLeafButtons();
@@ -8,17 +9,16 @@ const warehouseLeaf = {
     initSetAsLeafButtons: function () {
         const setAsLeafButtons = document.getElementsByClassName('warehouse-set-as-leaf-button');
         Array.from(setAsLeafButtons).forEach((button) => {
-            button.addEventListener('click', warehouseLeaf.setAsLeaf);
+            button.addEventListener('click', warehouseLeaf.toggleLeafStatus);
         });
     },
     initUnsetAsLeafButtons: function () {
         const unsetAsLeafButtons = document.getElementsByClassName('warehouse-unset-as-leaf-button');
         Array.from(unsetAsLeafButtons).forEach((button) => {
-            button.addEventListener('click', warehouseLeaf.unsetAsLeaf);
+            button.addEventListener('click', warehouseLeaf.toggleLeafStatus);
         });
     },
-    setAsLeaf: function (event) {
-        console.log('setAsLeaf');
+    toggleLeafStatus: function (event) {
         event.preventDefault();
         const button = event.target;
         const endpoint = button.getAttribute('data-endpoint');
@@ -33,20 +33,20 @@ const warehouseLeaf = {
 
                 return response.json();
             })
-            .then(response => {
+            .then(async response => {
                 if (response.error === true) {
                     alert(response['errorMessage']);
                 } else {
                     const endpoint = warehouseStructure.getOpenNodeEndpoint();
-                    warehouseStructure.refreshNodesList(endpoint).then();
+                    await warehouseStructure.refreshNodesList(endpoint).then();
                 }
+            })
+            .then(() => {
+                warehouseEventListenersManager.initWarehouseEventListeners();
             })
             .catch(error => {
                 alert(error);
             });
-    },
-    unsetAsLeaf: function () {
-
     },
 }
 

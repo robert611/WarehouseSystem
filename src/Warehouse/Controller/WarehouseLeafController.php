@@ -35,9 +35,11 @@ class WarehouseLeafController extends AbstractController
     }
 
     #[Route('/unset/{id}', name: 'app_warehouse_leaf_unset', methods: ['POST'])]
-    public function unset(WarehouseStructureTree $node)
+    public function unset(WarehouseStructureTree $node): JsonResponse
     {
         $node->setIsLeaf(false);
         $this->entityManager->flush();
+
+        return new JsonResponse(['error' => false]);
     }
 }
