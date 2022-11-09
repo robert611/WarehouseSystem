@@ -23,6 +23,10 @@ class WarehouseItem
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'warehouseItems')]
     private Product $product;
 
+    #[ORM\ManyToOne(targetEntity: WarehouseStructureTree::class, inversedBy: 'warehouseItems')]
+    #[ORM\JoinColumn(nullable: false)]
+    private WarehouseStructureTree $node;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class WarehouseItem
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getNode(): ?WarehouseStructureTree
+    {
+        return $this->node;
+    }
+
+    public function setNode(?WarehouseStructureTree $node): self
+    {
+        $this->node = $node;
 
         return $this;
     }
