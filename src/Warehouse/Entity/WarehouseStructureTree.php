@@ -21,7 +21,8 @@ class WarehouseStructureTree
     #[ORM\Column(type: 'boolean')]
     private bool $isLeaf;
 
-    #[ORM\ManyToOne(targetEntity: self::class)]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
     private ?WarehouseStructureTree $parent;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -33,9 +34,13 @@ class WarehouseStructureTree
     #[ORM\OneToMany(mappedBy: 'node', targetEntity: WarehouseItem::class, orphanRemoval: true)]
     private Collection $warehouseItems;
 
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private Collection $children;
+
     public function __construct()
     {
         $this->warehouseItems = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,6 +143,21 @@ class WarehouseStructureTree
             if ($warehouseItem->getNode() === $this) {
                 $warehouseItem->setNode(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function addChild(WarehouseStructureTree $node): self
+    {
+        if (!$this->children->contains($node)) {
+            $this->children[] = $node;
+            $node->setParent($this);
         }
 
         return $this;
