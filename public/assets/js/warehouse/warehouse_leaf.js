@@ -28,7 +28,7 @@ export const warehouseLeaf = {
         })
             .then(response => {
                 if (response.ok === false) {
-                    throw new Error('Ups. Coś poszło nie tak podczas otwierania elementu struktury.');
+                    throw new Error('Ups. Coś poszło nie tak podczas zmiany stanu elementu.');
                 }
 
                 return response.json();
