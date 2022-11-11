@@ -8,16 +8,16 @@ use Doctrine\Persistence\ObjectManager;
 
 class WarehouseStructureTreeFixtures extends Fixture
 {
-    public const NODE_CONTAINING_CHILDREN_NAME = 'CONTAIN';
+    public const NODE_CONTAINING_ITEMS_NAME = 'CONTAIN';
     public const NODE_CONTAINING_CHILDREN_REFERENCE = 'CONTAINING_CHILDREN';
 
     public function load(ObjectManager $manager): void
     {
         $nodeContainingItems = new WarehouseStructureTree();
-        $nodeContainingItems->setName(self::NODE_CONTAINING_CHILDREN_NAME);
+        $nodeContainingItems->setName(self::NODE_CONTAINING_ITEMS_NAME);
         $nodeContainingItems->setParent(null);
         $nodeContainingItems->setIsLeaf(true);
-        $nodeContainingItems->setTreePath(self::NODE_CONTAINING_CHILDREN_NAME);
+        $nodeContainingItems->setTreePath(self::NODE_CONTAINING_ITEMS_NAME);
 
         $manager->persist($nodeContainingItems);
         $manager->flush();
