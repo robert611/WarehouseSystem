@@ -3,6 +3,7 @@
 namespace App\Warehouse\Repository;
 
 use App\Warehouse\Entity\WarehouseItem;
+use App\Warehouse\Model\Enum\WarehouseItemStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,5 +38,17 @@ class WarehouseItemRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getNotFreeLeafItemsCount(int $leafId): int
+    {
+        return $this->createQueryBuilder('item')
+            ->select('count(item) as count')
+            ->where('item.node = :leafId')
+            ->andWhere('item.status != :status')
+            ->setParameter('leafId', $leafId)
+            ->setParameter('status', (WarehouseItemStatusEnum::FREE)->toString())
+            ->getQuery()
+            ->getResult()[0]['count'];
     }
 }

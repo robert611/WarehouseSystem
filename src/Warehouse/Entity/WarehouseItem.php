@@ -25,7 +25,7 @@ class WarehouseItem
 
     #[ORM\ManyToOne(targetEntity: WarehouseStructureTree::class, inversedBy: 'warehouseItems')]
     #[ORM\JoinColumn(nullable: false)]
-    private WarehouseStructureTree $node;
+    private ?WarehouseStructureTree $node;
 
     public function getId(): ?int
     {

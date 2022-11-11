@@ -6,7 +6,7 @@ use App\Product\Entity\Product;
 use App\Product\Form\ProductType;
 use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
-use App\Utils\HashTable;
+use App\Shared\HashTable;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

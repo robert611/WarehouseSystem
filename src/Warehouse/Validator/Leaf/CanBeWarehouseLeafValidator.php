@@ -9,11 +9,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CanBeWarehouseLeafValidator extends ConstraintValidator
 {
-    public function __construct()
-    {
-
-    }
-
     public function validate(mixed $value, Constraint $constraint)
     {
         if (!$constraint instanceof CanBeWarehouseLeaf) {

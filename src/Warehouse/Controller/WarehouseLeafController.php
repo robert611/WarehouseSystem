@@ -4,6 +4,7 @@ namespace App\Warehouse\Controller;
 
 use App\Warehouse\Entity\WarehouseStructureTree;
 use App\Warehouse\Validator\DTO\SetNodeAsLeafDTO;
+use App\Warehouse\Validator\DTO\UnsetAsLeafDTO;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,6 +49,14 @@ class WarehouseLeafController extends AbstractController
     #[Route('/unset/{id}', name: 'app_warehouse_leaf_unset', methods: ['POST'])]
     public function unset(WarehouseStructureTree $node): JsonResponse
     {
+        $unsetAsLeafDTO = new UnsetAsLeafDTO($node);
+        $errors = $this->validator->validate($unsetAsLeafDTO);
+
+        if (count($errors) > 0) {
+            return new JsonResponse(['error' => true, 'errorMessage' => $errors[0]->getMessage()]);
+        }
+
+        $node->removeWarehouseItems();
         $node->setIsLeaf(false);
         $this->entityManager->flush();
 
