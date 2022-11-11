@@ -7,6 +7,7 @@ use App\Product\Form\ProductType;
 use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
 use App\Shared\HashTable;
+use App\Warehouse\Service\WarehouseItem\ReleaseService;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/product')]
 class ProductController extends AbstractController
 {
+    private readonly ReleaseService $releaseService;
+
+    public function __construct(ReleaseService $releaseService)
+    {
+        $this->releaseService = $releaseService;
+    }
+
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
@@ -85,6 +93,7 @@ class ProductController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+            $this->releaseService->releaseProductWarehouseItems($product, $this->getUser());
             $productRepository->remove($product, true);
         }
 

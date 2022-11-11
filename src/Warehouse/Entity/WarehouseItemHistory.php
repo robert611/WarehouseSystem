@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WarehouseItemHistoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class WarehouseItemHistory
 {
     #[ORM\Id]
@@ -23,7 +24,7 @@ class WarehouseItemHistory
     private string $status;
 
     #[ORM\ManyToOne(targetEntity: Product::class)]
-    private Product $product;
+    private null|Product $product;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -95,5 +96,11 @@ class WarehouseItemHistory
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new DateTimeImmutable();
     }
 }
