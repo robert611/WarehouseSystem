@@ -7,6 +7,7 @@ use App\Product\Model\Enum\SaleTypeEnum;
 use App\Product\Repository\ProductRepository;
 use App\Security\Repository\UserRepository;
 use DOMElement;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,9 @@ class ProductControllerTest extends WebTestCase
     private ProductRepository $productRepository;
     private DataCollectorTranslator $translator;
 
+    /**
+     * @throws Exception
+     */
     public function setUp(): void
     {
         parent::setUp();

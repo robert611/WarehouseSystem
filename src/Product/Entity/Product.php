@@ -49,7 +49,7 @@ class Product
     private Collection $productParameters;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: WarehouseItem::class)]
-    private $warehouseItems;
+    private Collection $warehouseItems;
 
     public function __construct()
     {

@@ -162,4 +162,13 @@ class WarehouseStructureTree
 
         return $this;
     }
+
+    public function removeWarehouseItems(): void
+    {
+        $itemsContainedByNode = $this->getWarehouseItems();
+
+        foreach ($itemsContainedByNode as $item) {
+            $this->removeWarehouseItem($item);
+        }
+    }
 }
