@@ -21,7 +21,7 @@ class WarehouseItem
     private string $status;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'warehouseItems')]
-    private Product $product;
+    private null|Product $product;
 
     #[ORM\ManyToOne(targetEntity: WarehouseStructureTree::class, inversedBy: 'warehouseItems')]
     #[ORM\JoinColumn(nullable: false)]

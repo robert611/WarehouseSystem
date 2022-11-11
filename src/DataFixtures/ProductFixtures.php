@@ -12,6 +12,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const TEST_PRODUCT_REFERENCE = 'TEST_PRODUCT_REFERENCE';
+
     public function load(ObjectManager $manager): void
     {
         /** @var User $casualUserReference */
@@ -27,6 +29,8 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($product);
         $manager->flush();
+
+        $this->addReference(self::TEST_PRODUCT_REFERENCE, $product);
     }
 
     public function getDependencies(): array
