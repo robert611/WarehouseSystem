@@ -1,6 +1,6 @@
 import alertUtil from '../utils/alert.js';
 
-const warehouseStructure = {
+export const warehouseStructure = {
     initEventListeners: function () {
         const warehouseStructureForm = document.getElementById('warehouse-structure-form');
         warehouseStructureForm.addEventListener('submit', warehouseStructure.createWarehouseStructureElement);
@@ -35,7 +35,7 @@ const warehouseStructure = {
             })
             .then(() => {
                 const endpoint = warehouseStructure.getOpenNodeEndpoint(form['warehouse_structure[parent]'].value);
-                warehouseStructure.refreshNodesList(endpoint);
+                warehouseStructure.refreshNodesList(endpoint).then();
             })
             .catch(error => {
                 form.appendChild(alertUtil.createAlertWidget('danger', error));
@@ -90,7 +90,14 @@ const warehouseStructure = {
                 warehouseStructure.initEventListeners();
             });
     },
-    getOpenNodeEndpoint: function (parentId) {
+    getOpenNodeEndpoint: function (parentId = undefined) {
+        if (parentId === undefined) {
+            const parentInput = document.getElementById('warehouse_structure_parent');
+            if (parentInput) {
+                parentId = parentInput.value;
+            }
+        }
+
         if (parentId) {
             let endpoint = document.getElementById('warehouse-structure-open-endpoint').value;
             endpoint = endpoint.replace('nodeId', parentId);

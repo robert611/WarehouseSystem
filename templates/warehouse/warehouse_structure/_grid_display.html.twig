@@ -9,8 +9,13 @@
                             <div>
                                 {% if node.isLeaf %}
                                     <button class="btn btn-outline-success warehouse-open-button mb-1"
-                                            data-endpoint="{{ path('app_warehouse_structure_open_leaf', {id: node.id}) }}">
+                                            data-endpoint="{{ path('app_warehouse_leaf_open', {id: node.id}) }}">
                                         Otwórz
+                                    </button>
+                                    <button class="btn btn-outline-secondary warehouse-unset-as-leaf-button mb-1"
+                                            data-nodeId="{{ node.id }}"
+                                            data-endpoint="{{ path('app_warehouse_leaf_unset', {id: node.id}) }}">
+                                        Zmień na węzeł
                                     </button>
                                 {% else %}
                                     <button class="btn btn-outline-success warehouse-open-button mb-1"
@@ -18,10 +23,12 @@
                                             data-endpoint="{{ path('app_warehouse_structure_open', {id: node.id}) }}">
                                         Otwórz
                                     </button>
+                                    <button class="btn btn-outline-info warehouse-set-as-leaf-button mb-1"
+                                            data-nodeId="{{ node.id }}"
+                                            data-endpoint="{{ path('app_warehouse_leaf_set', {id: node.id}) }}">
+                                        Ustaw jako pojemnik
+                                    </button>
                                 {% endif %}
-                                <button class="btn btn-outline-info warehouse-set-leaf-button mb-1">
-                                    Ustaw jako pojemnik
-                                </button>
                             </div>
                             <div>
                                 <button class="btn btn-outline-warning warehouse-block-button mb-1">Zablokuj</button>

@@ -19,6 +19,10 @@ class WarehouseLeafSettings
     #[ORM\ManyToOne(targetEntity: WarehouseDimension::class, inversedBy: 'warehouseLeafSettings')]
     private ?WarehouseDimension $dimension;
 
+    #[ORM\OneToOne(inversedBy: 'warehouseLeafSettings', targetEntity: WarehouseStructureTree::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private WarehouseStructureTree $node;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +48,18 @@ class WarehouseLeafSettings
     public function setDimension(?WarehouseDimension $dimension): self
     {
         $this->dimension = $dimension;
+
+        return $this;
+    }
+
+    public function getNode(): ?WarehouseStructureTree
+    {
+        return $this->node;
+    }
+
+    public function setNode(WarehouseStructureTree $node): self
+    {
+        $this->node = $node;
 
         return $this;
     }
