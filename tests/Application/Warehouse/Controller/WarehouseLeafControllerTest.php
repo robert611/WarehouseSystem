@@ -10,11 +10,13 @@ use App\Warehouse\Validator\Leaf\CanBeWarehouseLeafValidator;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WarehouseLeafControllerTest extends WebTestCase
 {
     private readonly KernelBrowser $client;
     private readonly WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
+    private readonly TranslatorInterface $translator;
 
     /**
      * @throws Exception
@@ -25,6 +27,7 @@ class WarehouseLeafControllerTest extends WebTestCase
         $this->client = static::createClient();
         $this->userRepository = static::getContainer()->get(UserRepository::class);
         $this->warehouseStructureTreeRepository = static::getContainer()->get(WarehouseStructureTreeRepository::class);
+        $this->translator = static::getContainer()->get(TranslatorInterface::class);
     }
 
     public function test_set_with_children_will_fail(): void
@@ -42,8 +45,10 @@ class WarehouseLeafControllerTest extends WebTestCase
 
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
+        $translation = $this->translator->trans(CanBeWarehouseLeafValidator::CONTAINS_CHILDREN_MESSAGE);
+
         $this->assertTrue($responseData['error']);
-        $this->assertEquals(CanBeWarehouseLeafValidator::CONTAINS_CHILDREN_MESSAGE, $responseData['errorMessage']);
+        $this->assertEquals($translation, $responseData['errorMessage']);
         $this->assertFalse($node->isLeaf());
     }
 
@@ -83,8 +88,10 @@ class WarehouseLeafControllerTest extends WebTestCase
 
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
 
+        $translation = $this->translator->trans(CanBeUnsetFromLeafValidator::CONTAINS_ITEMS_MESSAGE);
+
         $this->assertTrue($responseData['error']);
-        $this->assertEquals(CanBeUnsetFromLeafValidator::CONTAINS_ITEMS_MESSAGE, $responseData['errorMessage']);
+        $this->assertEquals($translation, $responseData['errorMessage']);
         $this->assertTrue($node->isLeaf());
     }
 
