@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class WarehouseItemRepositoryTest extends KernelTestCase
 {
-    private null|ObjectManager $entityManager;
-    private WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
-    private WarehouseItemRepository $warehouseItemRepository;
+    private readonly null|ObjectManager $entityManager;
+    private readonly WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
+    private readonly WarehouseItemRepository $warehouseItemRepository;
 
     protected function setUp(): void
     {

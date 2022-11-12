@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CanBeWarehouseLeafValidator extends ConstraintValidator
 {
+    public const CONTAINS_CHILDREN_MESSAGE = 'Ten element zawiera pod elementy.';
+
     public function validate(mixed $value, Constraint $constraint)
     {
         if (!$constraint instanceof CanBeWarehouseLeaf) {
@@ -20,7 +22,7 @@ class CanBeWarehouseLeafValidator extends ConstraintValidator
 
         if ($node->getChildren()->count() > 0) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ message }}', 'Ten element zawiera pod elementy.')
+                ->setParameter('{{ message }}', self::CONTAINS_CHILDREN_MESSAGE)
                 ->addViolation();
         }
     }

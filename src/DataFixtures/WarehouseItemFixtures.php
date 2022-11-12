@@ -16,6 +16,7 @@ class WarehouseItemFixtures extends Fixture implements DependentFixtureInterface
     public const WAREHOUSE_ITEM_RESERVED = 'WAREHOUSE_ITEM_RESERVED';
     public const WAREHOUSE_ITEM_TAKEN = 'WAREHOUSE_ITEM_TAKEN';
     public const WAREHOUSE_ITEM_BLOCKED = 'WAREHOUSE_ITEM_BLOCKED';
+    public const WAREHOUSE_ITEM_FREE_TO_DELETE = 'WAREHOUSE_ITEM_FREE_TO_DELETE';
 
     public function load(ObjectManager $manager): void
     {
@@ -79,6 +80,13 @@ class WarehouseItemFixtures extends Fixture implements DependentFixtureInterface
                 'status' => (WarehouseItemStatusEnum::BLOCKED)->toString(),
                 'node' => WarehouseStructureTreeFixtures::NODE_CONTAINING_ITEMS_REFERENCE,
                 'reference' => self::WAREHOUSE_ITEM_BLOCKED,
+            ],
+            [
+                'product' => null,
+                'identifier' => WarehouseStructureTreeFixtures::NODE_CONTAINING_FREE_ITEMS_NAME . '001',
+                'status' => (WarehouseItemStatusEnum::FREE)->toString(),
+                'node' => WarehouseStructureTreeFixtures::NODE_CONTAINING_FREE_ITEMS_REFERENCE,
+                'reference' => self::WAREHOUSE_ITEM_FREE_TO_DELETE,
             ],
         ];
     }

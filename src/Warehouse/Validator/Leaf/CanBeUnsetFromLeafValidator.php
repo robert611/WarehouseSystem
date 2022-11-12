@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CanBeUnsetFromLeafValidator extends ConstraintValidator
 {
+    public const CONTAINS_ITEMS_MESSAGE = 'Ten pojemnik zawiera miejsca magazynowe, które nie są puste.';
+
     public function __construct(private readonly WarehouseItemRepository $warehouseItemRepository)
     {
     }
@@ -25,7 +27,7 @@ class CanBeUnsetFromLeafValidator extends ConstraintValidator
 
         if ($this->warehouseItemRepository->getNotFreeLeafItemsCount($node->getId()) > 0) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ message }}', 'Ten pojemnik zawiera miejsca magazynowe, które nie są puste.')
+                ->setParameter('{{ message }}', self::CONTAINS_ITEMS_MESSAGE)
                 ->addViolation();
         }
     }
