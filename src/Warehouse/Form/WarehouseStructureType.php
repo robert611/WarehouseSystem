@@ -29,7 +29,7 @@ class WarehouseStructureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => WarehouseStructureTree::class,
+            'data_class' => null,
             'allow_extra_fields' => true,
         ]);
     }
