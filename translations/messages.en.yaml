@@ -28,3 +28,5 @@ pictures: Pictures
 parameters: Parameters
 other_information: Other information
 created_at: Creation Date
+validator.contains_children_message: 'This element contains subelements.'
+validator.contains_items_message: 'This container contains magazine numbers that are not free.'

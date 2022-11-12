@@ -22,7 +22,7 @@ class WarehouseStructureTree
     private bool $isLeaf;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
-    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?WarehouseStructureTree $parent;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -34,7 +34,7 @@ class WarehouseStructureTree
     #[ORM\OneToMany(mappedBy: 'node', targetEntity: WarehouseItem::class, orphanRemoval: true)]
     private Collection $warehouseItems;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['persist', 'remove'])]
     private Collection $children;
 
     public function __construct()

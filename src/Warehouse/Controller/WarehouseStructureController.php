@@ -5,6 +5,7 @@ namespace App\Warehouse\Controller;
 use App\Warehouse\Entity\WarehouseStructureTree;
 use App\Warehouse\Form\WarehouseStructureType;
 use App\Warehouse\Repository\WarehouseStructureTreeRepository;
+use App\Warehouse\Service\Factory\WarehouseStructureTreeFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,17 +48,18 @@ class WarehouseStructureController extends AbstractController
     #[Route('/new', name: 'app_warehouse_structure_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        $warehouseStructure = new WarehouseStructureTree();
-        $form = $this->createForm(WarehouseStructureType::class, $warehouseStructure, [
+        $form = $this->createForm(WarehouseStructureType::class, [], [
             'action' => $this->generateUrl('app_warehouse_structure_new'),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
-            $warehouseStructure->setName(strtoupper($formData->getName()));
-            $warehouseStructure->setIsLeaf(false);
-            $warehouseStructure->setTreePath(isset($parent) ? $parent->getTreePath() : '' . $warehouseStructure->getName());
+            $warehouseStructure = WarehouseStructureTreeFactory::createNode(
+                $formData['name'],
+                false,
+                $formData['parent']
+            );
 
             $this->warehouseStructureTreeRepository->add($warehouseStructure, true);
 
