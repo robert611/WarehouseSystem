@@ -1,4 +1,5 @@
 import alertUtil from '../utils/alert.js';
+import {eventListenersManager as warehouseEventListenersManager} from "./event_listeners_manager.js";
 
 export const warehouseStructure = {
     initEventListeners: function () {
@@ -41,25 +42,18 @@ export const warehouseStructure = {
                 form.appendChild(alertUtil.createAlertWidget('danger', error));
             });
     },
-    openNode: function (event) {
+    openNode: async function (event) {
         const button = event.target;
         const nodeId = button.getAttribute('data-nodeId');
         const endpoint = event.target.getAttribute('data-endpoint');
-
-        const refreshNodesList = warehouseStructure.refreshNodesList(endpoint);
-
-        refreshNodesList
-            .then(async () => {
-                await warehouseStructure.renderNewForm(nodeId);
-            })
-            .catch(error => {
-                alert(error);
-            });
+        await warehouseStructure.refreshNodesList(endpoint);
+        await warehouseStructure.renderNewForm(nodeId);
+        warehouseEventListenersManager.initWarehouseEventListeners();
     },
-    renderNewForm: function (nodeId) {
+    renderNewForm: async function (nodeId) {
         const endpoint = document.getElementById('warehouse-structure-new-form-endpoint').value;
 
-        fetch(endpoint)
+        await fetch(endpoint)
             .then(response => {
                 return response.text();
             })
@@ -69,13 +63,12 @@ export const warehouseStructure = {
             .then(() => {
                 const parentSelect = document.getElementById('warehouse_structure_parent');
                 parentSelect.value = nodeId;
-            })
-            .then(() => {
-                warehouseStructure.initEventListeners();
             });
+
+        warehouseEventListenersManager.initWarehouseEventListeners();
     },
-    refreshNodesList: function (endpoint) {
-        return fetch(endpoint)
+    refreshNodesList: async function (endpoint) {
+        await fetch(endpoint)
             .then(response => {
                 if (response.ok === false) {
                     throw new Error('Ups. Coś poszło nie tak podczas otwierania elementu struktury.');
@@ -86,9 +79,11 @@ export const warehouseStructure = {
             .then((response) => {
                 document.getElementById('warehouse-nodes-grid-display-container').innerHTML = response;
             })
-            .then(() => {
-                warehouseStructure.initEventListeners();
+            .catch(error => {
+                alert(error);
             });
+
+        warehouseEventListenersManager.initWarehouseEventListeners();
     },
     getOpenNodeEndpoint: function (parentId = undefined) {
         if (parentId === undefined) {

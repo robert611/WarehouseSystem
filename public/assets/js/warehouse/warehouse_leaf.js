@@ -38,7 +38,7 @@ export const warehouseLeaf = {
                     alert(response['errorMessage']);
                 } else {
                     const endpoint = warehouseStructure.getOpenNodeEndpoint();
-                    await warehouseStructure.refreshNodesList(endpoint).then();
+                    await warehouseStructure.refreshNodesList(endpoint);
                 }
             })
             .then(() => {
