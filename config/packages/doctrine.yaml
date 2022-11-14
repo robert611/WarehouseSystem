@@ -28,6 +28,12 @@ doctrine:
                 prefix: 'App\Warehouse\Entity'
                 alias: App
                 type: attribute
+            App\Shared:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Shared/Entity'
+                prefix: 'App\Shared\Entity'
+                alias: App
+                type: attribute
 #            App:
 #                is_bundle: false
 #                dir: '%kernel.project_dir%/src/Entity'
