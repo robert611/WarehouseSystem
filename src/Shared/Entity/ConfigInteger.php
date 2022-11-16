@@ -8,6 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ConfigIntegerRepository::class)]
 class ConfigInteger
 {
+    public const WAREHOUSE_LEAF_MINIMAL_CAPACITY = 'WAREHOUSE_LEAF_MINIMAL_CAPACITY';
+    public const WAREHOUSE_LEAF_MAXIMUM_CAPACITY = 'WAREHOUSE_LEAF_MAXIMUM_CAPACITY';
+    public const WAREHOUSE_NODE_MAXIMUM_DEPTH = 'WAREHOUSE_NODE_MAXIMUM_DEPTH';
+
+    public const DEFAULT_CONFIG_VALUES = [
+        self::WAREHOUSE_LEAF_MINIMAL_CAPACITY => 0,
+        self::WAREHOUSE_LEAF_MAXIMUM_CAPACITY => 200,
+        self::WAREHOUSE_NODE_MAXIMUM_DEPTH => 5,
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]

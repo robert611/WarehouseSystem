@@ -3,7 +3,6 @@
 namespace App\Shared\Service\Config\Creator;
 
 use Doctrine\ORM\EntityManagerInterface;
-use ReflectionClass;
 
 abstract class AbstractConfigCreator
 {
@@ -16,8 +15,8 @@ abstract class AbstractConfigCreator
 
     public function createConfigEntriesIfNotExists(): void
     {
-        $reflectionClass = new ReflectionClass(static::class);
-        $constants = $reflectionClass->getConstants();
+        $class = static::ENTITY_CLASS;
+        $constants = $class::DEFAULT_CONFIG_VALUES;
 
         foreach ($constants as $name => $value) {
             if ($this->doesConfigEntryExist($name)) {

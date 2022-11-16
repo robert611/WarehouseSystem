@@ -8,10 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ConfigIntegerCreator extends AbstractConfigCreator
 {
-    public const WAREHOUSE_LEAF_MINIMAL_CAPACITY = 0;
-    public const WAREHOUSE_LEAF_MAXIMUM_CAPACITY = 200;
-    public const WAREHOUSE_NODE_MAXIMUM_DEPTH = 5;
-
+    public const ENTITY_CLASS = ConfigInteger::class;
     private ConfigIntegerRepository $configIntegerRepository;
 
     public function __construct(EntityManagerInterface $entityManager, ConfigIntegerRepository $configIntegerRepository)
