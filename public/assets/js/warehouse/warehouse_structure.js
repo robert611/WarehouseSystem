@@ -50,6 +50,9 @@ export const warehouseStructure = {
         const endpoint = event.target.getAttribute('data-endpoint');
         await warehouseStructure.refreshNodesList(endpoint);
         await warehouseStructure.renderNewForm(nodeId);
+        if (button.hasAttribute('data-isLeaf')) {
+            warehouseStructure.removeNewForm();
+        }
         warehouseEventListenersManager.initWarehouseEventListeners();
     },
     renderNewForm: async function (nodeId) {
