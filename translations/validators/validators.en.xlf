@@ -6,6 +6,10 @@
                 <source>user.password_safe.is_true</source>
                 <target>Password must be different than username</target>
             </trans-unit>
+            <trans-unit id="warehouse.leaf.capacity">
+                <source>warehouse.leaf.capacity</source>
+                <target>Capacity must be in range between %minimal% and %maximal%</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

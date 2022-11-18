@@ -30,5 +30,4 @@ other_information: Other information
 created_at: Creation Date
 validator.contains_children_message: 'This element contains subelements.'
 validator.contains_items_message: 'This container contains magazine numbers that are not free.'
-validator.warehouse_leaf_capacity_message: Capacity must be in range between %minimal% and %maximal%
 saved_leaf_configuration: 'Configuration has been saved successfully'

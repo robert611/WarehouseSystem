@@ -35,6 +35,10 @@
                 <source>user.password_safe.is_true</source>
                 <target>Hasło musi się różnić od nazwy użytkownika</target>
             </trans-unit>
+            <trans-unit id="warehouse.leaf.capacity">
+                <source>warehouse.leaf.capacity</source>
+                <target>Pojemność musi być w zakresie do {{ minimal }} do {{ maximal }}</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
