@@ -5,6 +5,7 @@ export const warehouseLeaf = {
     initEventListeners: function () {
         warehouseLeaf.initSetAsLeafButtons();
         warehouseLeaf.initUnsetAsLeafButtons();
+        warehouseLeaf.initSaveConfigurationForm();
     },
     initSetAsLeafButtons: function () {
         const setAsLeafButtons = document.getElementsByClassName('warehouse-set-as-leaf-button');
@@ -17,6 +18,12 @@ export const warehouseLeaf = {
         Array.from(unsetAsLeafButtons).forEach((button) => {
             button.addEventListener('click', warehouseLeaf.toggleLeafStatus);
         });
+    },
+    initSaveConfigurationForm: function () {
+        const form = document.getElementById('warehouse-leaf-configuration-form');
+        if (form) {
+            form.addEventListener('submit', warehouseLeaf.saveConfiguration);
+        }
     },
     toggleLeafStatus: function (event) {
         event.preventDefault();
@@ -46,6 +53,22 @@ export const warehouseLeaf = {
             })
             .catch(error => {
                 alert(error);
+            });
+    },
+    saveConfiguration: function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const endpoint = form.getAttribute('action');
+
+        fetch(endpoint, {
+            method: 'POST',
+            body: new FormData(form),
+        })
+            .then((response) => {
+                return response.text();
+            })
+            .then((response) => {
+                document.getElementById('warehouse-leaf-configuration-form').innerHTML = response;
             });
     },
 }

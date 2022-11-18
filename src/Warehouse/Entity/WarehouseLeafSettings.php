@@ -4,6 +4,7 @@ namespace App\Warehouse\Entity;
 
 use App\Warehouse\Repository\WarehouseLeafSettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Warehouse\Validator\Leaf as WarehouseAssert;
 
 #[ORM\Entity(repositoryClass: WarehouseLeafSettingsRepository::class)]
 class WarehouseLeafSettings
@@ -14,6 +15,7 @@ class WarehouseLeafSettings
     private int $id;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[WarehouseAssert\LeafCapacityInRange]
     private ?int $capacity;
 
     #[ORM\ManyToOne(targetEntity: WarehouseDimension::class, inversedBy: 'warehouseLeafSettings')]

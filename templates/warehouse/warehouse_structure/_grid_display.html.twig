@@ -9,7 +9,8 @@
                             <div>
                                 {% if node.isLeaf %}
                                     <button class="btn btn-outline-success warehouse-open-button mb-1"
-                                            data-endpoint="{{ path('app_warehouse_leaf_open', {id: node.id}) }}">
+                                            data-endpoint="{{ path('app_warehouse_leaf_open', {id: node.id}) }}"
+                                            data-isLeaf="true">
                                         Otwórz
                                     </button>
                                     <button class="btn btn-outline-secondary warehouse-unset-as-leaf-button mb-1"

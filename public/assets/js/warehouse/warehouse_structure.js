@@ -4,7 +4,9 @@ import {eventListenersManager as warehouseEventListenersManager} from "./event_l
 export const warehouseStructure = {
     initEventListeners: function () {
         const warehouseStructureForm = document.getElementById('warehouse-structure-form');
-        warehouseStructureForm.addEventListener('submit', warehouseStructure.createWarehouseStructureElement);
+        if (warehouseStructureForm) {
+            warehouseStructureForm.addEventListener('submit', warehouseStructure.createWarehouseStructureElement);
+        }
 
         const openNodeButtons = document.getElementsByClassName('warehouse-open-button');
         Array.from(openNodeButtons).forEach((button) => {
@@ -48,6 +50,9 @@ export const warehouseStructure = {
         const endpoint = event.target.getAttribute('data-endpoint');
         await warehouseStructure.refreshNodesList(endpoint);
         await warehouseStructure.renderNewForm(nodeId);
+        if (button.hasAttribute('data-isLeaf')) {
+            warehouseStructure.removeNewForm();
+        }
         warehouseEventListenersManager.initWarehouseEventListeners();
     },
     renderNewForm: async function (nodeId) {
@@ -101,6 +106,9 @@ export const warehouseStructure = {
         }
 
         return document.getElementById('warehouse-structure-open-root-endpoint').value;
+    },
+    removeNewForm: function () {
+        document.getElementById('warehouse-new-form-container').innerHTML = '';
     },
 }
 

@@ -6,8 +6,8 @@ use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 #[Attribute]
-class CanBeWarehouseLeaf extends Constraint
+class LeafCapacityInRange extends Constraint
 {
-    public string $message = '{{ message }}';
+    public string $message = 'warehouse.leaf.capacity';
     public string $mode = 'strict';
 }
