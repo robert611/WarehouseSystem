@@ -58,17 +58,17 @@ export const warehouseLeaf = {
     saveConfiguration: function (event) {
         event.preventDefault();
         const form = event.target;
-        const endpoint = form.getAttribute('endpoint');
+        const endpoint = form.getAttribute('action');
 
         fetch(endpoint, {
             method: 'POST',
             body: new FormData(form),
         })
             .then((response) => {
-                return response.json();
+                return response.text();
             })
             .then((response) => {
-
+                document.getElementById('warehouse-leaf-configuration-form').innerHTML = response;
             });
     },
 }
