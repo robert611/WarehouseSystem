@@ -40,7 +40,7 @@ class WarehouseStructureController extends AbstractController
     public function open(WarehouseStructureTree $node): Response
     {
         return $this->render('warehouse/warehouse_structure/_grid_display.html.twig', [
-            'parent' => $node,
+            'owner' => $node,
             'treeElements' => $this->warehouseStructureTreeRepository->findBy(['parent' => $node]),
         ]);
     }

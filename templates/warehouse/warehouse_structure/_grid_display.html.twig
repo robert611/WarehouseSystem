@@ -1,3 +1,16 @@
+{% if owner is defined %}
+    <div id="go-back-button-container" class="mb-3">
+        {% if owner.parent %}
+            {% set endpoint = path('app_warehouse_structure_open', {id: owner.parent.id}) %}
+        {% else %}
+            {% set endpoint = path('app_warehouse_structure_open_root') %}
+        {% endif %}
+        <button id="warehouse-structure-go-back" class="btn btn-success" data-endpoint="{{ endpoint }}">
+            <i class="fa-solid fa-arrow-left me-2"></i>
+            Powrót
+        </button>
+    </div>
+{% endif %}
 {% for row in treeElements|batch(4) %}
     <div class="row">
         {% for node in row %}
