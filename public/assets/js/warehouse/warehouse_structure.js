@@ -12,6 +12,9 @@ export const warehouseStructure = {
         Array.from(openNodeButtons).forEach((button) => {
             button.addEventListener('click', warehouseStructure.openNode);
         });
+
+        const goBackButton = document.getElementById('warehouse-structure-go-back');
+        goBackButton.addEventListener('click', warehouseStructure.goBack);
     },
     createWarehouseStructureElement: function (event) {
         event.preventDefault();
@@ -54,6 +57,10 @@ export const warehouseStructure = {
             warehouseStructure.removeNewForm();
         }
         warehouseEventListenersManager.initWarehouseEventListeners();
+    },
+    goBack: async function (event) {
+        const endpoint = event.target.getAttribute('data-endpoint');
+        await warehouseStructure.refreshNodesList(endpoint).then();
     },
     renderNewForm: async function (nodeId) {
         const endpoint = document.getElementById('warehouse-structure-new-form-endpoint').value;
@@ -113,3 +120,5 @@ export const warehouseStructure = {
 }
 
 warehouseStructure.initEventListeners();
+
+// 1921 Violet Stamp. Since there were not many designs and nominal values used, it was decieded to distinguish stamps through the use of different main colors. Sold US 3.500.
