@@ -1,0 +1,31 @@
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Lp.</th>
+                <th>Identifier</th>
+                <th>Product</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in node.warehouseItems %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.identifier }}</td>
+                    <td>
+                        {% if item.product %}
+                            <a href="{{ path('app_product_show', {'id': item.product.id}) }}"
+                               class="text-decoration-none" target="_blank">
+                                {{ item.product.name }}
+                            </a>
+                        {% else %}
+                            Brak przypisanego produktu
+                        {% endif %}
+                    </td>
+                    <td>{{ item.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

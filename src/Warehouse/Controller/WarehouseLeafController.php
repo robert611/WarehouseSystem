@@ -35,10 +35,6 @@ class WarehouseLeafController extends AbstractController
     #[Route('/open/{id}', name: 'app_warehouse_leaf_open', methods: ['GET'])]
     public function open(WarehouseStructureTree $node): Response
     {
-        /* Chyba widok standardowy na górze ładny formularz do konfiguracji pojemnika */
-        /* Na dole tabelka z miejscami magazynowymi */
-        /* Ewentualnie formularz może być dostępny pod jakimś modalu w strukturze magazynowej jako kolejny przycisk */
-        /* Jeśli limit to 200 miejsc to być może powinna być tam paginacja */
         return $this->render('warehouse/warehouse_leaf/index.html.twig', [
             'node' => $node,
         ]);
@@ -66,6 +62,14 @@ class WarehouseLeafController extends AbstractController
 
         return $this->render('warehouse/warehouse_leaf/configuration_form.html.twig', [
            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/identifiers/table/{id}', name: 'app_warehouse_leaf_identifiers_table', methods: ['GET'])]
+    public function renderIdentifiersTable(WarehouseStructureTree $node): Response
+    {
+        return $this->render('warehouse/warehouse_leaf/leaf_items_table.html.twig', [
+            'node' => $node,
         ]);
     }
 

@@ -9,4 +9,7 @@
     <section id="warehouse-leaf-configuration-form">
         {{ render(controller('App\\Warehouse\\Controller\\WarehouseLeafController::saveConfiguration', {'id': node.id})) }}
     </section>
+    <section id="warehouse-leaf-identifiers-table" class="mt-4">
+        {{ render(controller('App\\Warehouse\\Controller\\WarehouseLeafController::renderIdentifiersTable', {'id': node.id})) }}
+    </section>
 </div>
