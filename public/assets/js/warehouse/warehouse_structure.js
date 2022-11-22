@@ -14,7 +14,9 @@ export const warehouseStructure = {
         });
 
         const goBackButton = document.getElementById('warehouse-structure-go-back');
-        goBackButton.addEventListener('click', warehouseStructure.goBack);
+        if (goBackButton) {
+            goBackButton.addEventListener('click', warehouseStructure.goBack);
+        }
     },
     createWarehouseStructureElement: function (event) {
         event.preventDefault();

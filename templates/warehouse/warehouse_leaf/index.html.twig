@@ -1,4 +1,11 @@
 <div id="warehouse-leaf-section">
+    <div id="go-back-button-container" class="mb-3">
+        <button id="warehouse-structure-go-back" class="btn btn-success"
+                data-endpoint="{{ path('app_warehouse_structure_open', {id: node.parent.id}) }}">
+            <i class="fa-solid fa-arrow-left me-2"></i>
+            Powrót
+        </button>
+    </div>
     <section id="warehouse-leaf-configuration-form">
         {{ render(controller('App\\Warehouse\\Controller\\WarehouseLeafController::saveConfiguration', {'id': node.id})) }}
     </section>
