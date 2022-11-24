@@ -10,6 +10,10 @@
                 <source>warehouse.leaf.capacity</source>
                 <target>Capacity must be in range between %minimal% and %maximal%</target>
             </trans-unit>
+            <trans-unit id="warehouse_leaf.capacity_contains_items">
+                <source>warehouse_leaf.capacity_contains_items</source>
+                <target>Capacity is smaller than position of existing magazine number with status different than free</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -2,6 +2,7 @@
 
 namespace App\Warehouse\Controller;
 
+use App\Warehouse\Entity\WarehouseLeafSettings;
 use App\Warehouse\Entity\WarehouseStructureTree;
 use App\Warehouse\Form\WarehouseLeafSettingsType;
 use App\Warehouse\Validator\DTO\SetNodeAsLeafDTO;
@@ -43,7 +44,7 @@ class WarehouseLeafController extends AbstractController
     #[Route('/save/configuration/{id}', name: 'app_warehouse_leaf_save_configuration', methods: ['GET', 'POST'])]
     public function saveConfiguration(WarehouseStructureTree $node, Request $request): Response
     {
-        $warehouseLeafSettings = $node->getWarehouseLeafSettings();
+        $warehouseLeafSettings = $node->getWarehouseLeafSettings() ?? new WarehouseLeafSettings();
         $form = $this->createForm(WarehouseLeafSettingsType::class, $warehouseLeafSettings, [
             'action' => $this->generateUrl('app_warehouse_leaf_save_configuration', ['id' => $node->getId()])
         ]);

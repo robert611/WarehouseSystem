@@ -7,12 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Warehouse\Validator\Leaf as WarehouseAssert;
 
 #[ORM\Entity(repositoryClass: WarehouseLeafSettingsRepository::class)]
+#[WarehouseAssert\LeafCapacityContainsItems]
 class WarehouseLeafSettings
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[WarehouseAssert\LeafCapacityInRange]

@@ -17,6 +17,13 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <div class="error-msg mt-2">
+                    {{ form_errors(form) }}
+                </div>
+            </div>
+        </div>
         {% for message in app.flashes('warehouse_leaf_configuration_success') %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ message }}
