@@ -50,6 +50,10 @@ class WarehouseLeafController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /* Do zrobienia w konfiguracji liścia */
+            /* 1. Trzeba sprawdzać czy jeśli ktoś zmniejsza pojemność nie usuwa przy tym itemów o innym statusie niż wolny */
+            /* 2. Trzeba po zmianie pojemności tworzyć bądź usuwać odpowiednio itemy */
+            /* 3. Trzeba sprawdzać czy można zmienić gabaryt jeśli jest zmieniany. A może nie. */
             $warehouseLeafSettings->setNode($node);
             $this->entityManager->persist($warehouseLeafSettings);
             $this->entityManager->flush();
