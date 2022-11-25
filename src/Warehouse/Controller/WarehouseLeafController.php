@@ -5,6 +5,7 @@ namespace App\Warehouse\Controller;
 use App\Warehouse\Entity\WarehouseLeafSettings;
 use App\Warehouse\Entity\WarehouseStructureTree;
 use App\Warehouse\Form\WarehouseLeafSettingsType;
+use App\Warehouse\Message\ConfigureLeafItems;
 use App\Warehouse\Validator\DTO\SetNodeAsLeafDTO;
 use App\Warehouse\Validator\DTO\UnsetAsLeafDTO;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -22,15 +24,18 @@ class WarehouseLeafController extends AbstractController
     private EntityManagerInterface $entityManager;
     private ValidatorInterface $validator;
     private TranslatorInterface $translator;
+    private MessageBusInterface $bus;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ValidatorInterface $validator,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MessageBusInterface $bus
     ) {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->translator = $translator;
+        $this->bus = $bus;
     }
 
     #[Route('/open/{id}', name: 'app_warehouse_leaf_open', methods: ['GET'])]
@@ -51,13 +56,11 @@ class WarehouseLeafController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* Do zrobienia w konfiguracji liścia */
-            /* 1. Trzeba sprawdzać czy jeśli ktoś zmniejsza pojemność nie usuwa przy tym itemów o innym statusie niż wolny */
-            /* 2. Trzeba po zmianie pojemności tworzyć bądź usuwać odpowiednio itemy */
-            /* 3. Trzeba sprawdzać czy można zmienić gabaryt jeśli jest zmieniany. A może nie. */
             $warehouseLeafSettings->setNode($node);
             $this->entityManager->persist($warehouseLeafSettings);
             $this->entityManager->flush();
+
+            $this->bus->dispatch(new ConfigureLeafItems($node->getId(), $warehouseLeafSettings->getCapacity()));
 
             $this->addFlash(
                 'warehouse_leaf_configuration_success',
