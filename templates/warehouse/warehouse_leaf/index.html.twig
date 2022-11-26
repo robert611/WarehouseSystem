@@ -9,7 +9,8 @@
     <section id="warehouse-leaf-configuration-form">
         {{ render(controller('App\\Warehouse\\Controller\\WarehouseLeafController::saveConfiguration', {'id': node.id})) }}
     </section>
-    <section id="warehouse-leaf-identifiers-table" class="mt-4">
-        {{ render(controller('App\\Warehouse\\Controller\\WarehouseLeafController::renderIdentifiersTable', {'id': node.id})) }}
+    <section id="warehouse-leaf-items-table" class="mt-4">
+        {{ render(controller('App\\Warehouse\\Controller\\WarehouseLeafController::renderItemsTable', {'id': node.id})) }}
     </section>
+    <input type="hidden" id="render-items-table-endpoint" value="{{ path('app_warehouse_leaf_items_table', {'id': node.id}) }}">
 </div>

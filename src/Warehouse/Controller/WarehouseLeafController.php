@@ -73,8 +73,8 @@ class WarehouseLeafController extends AbstractController
         ]);
     }
 
-    #[Route('/identifiers/table/{id}', name: 'app_warehouse_leaf_identifiers_table', methods: ['GET'])]
-    public function renderIdentifiersTable(WarehouseStructureTree $node): Response
+    #[Route('/items/table/{id}', name: 'app_warehouse_leaf_items_table', methods: ['GET'])]
+    public function renderItemsTable(WarehouseStructureTree $node): Response
     {
         return $this->render('warehouse/warehouse_leaf/leaf_items_table.html.twig', [
             'node' => $node,

@@ -69,6 +69,19 @@ export const warehouseLeaf = {
             })
             .then((response) => {
                 document.getElementById('warehouse-leaf-configuration-form').innerHTML = response;
+            })
+            .then(() => {
+                warehouseLeaf.refreshItemsTable();
+            });
+    },
+    refreshItemsTable: function () {
+        const endpoint = document.getElementById('render-items-table-endpoint').value;
+        const tableSection = document.getElementById('warehouse-leaf-items-table');
+
+        fetch(endpoint)
+            .then(response => response.text())
+            .then((response) => {
+                tableSection.innerHTML = response;
             });
     },
 }
