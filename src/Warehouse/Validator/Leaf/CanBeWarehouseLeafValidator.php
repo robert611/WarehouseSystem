@@ -19,7 +19,7 @@ class CanBeWarehouseLeafValidator extends ConstraintValidator
         $this->translator = $translator;
     }
 
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof CanBeWarehouseLeaf) {
             throw new UnexpectedTypeException($constraint, CanBeWarehouseLeaf::class);

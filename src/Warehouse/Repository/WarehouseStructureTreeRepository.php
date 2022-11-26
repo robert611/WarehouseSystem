@@ -39,6 +39,9 @@ class WarehouseStructureTreeRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return array<WarehouseStructureTreeRepository>
+     */
     public function findWithoutParent(): array
     {
         return $this->createQueryBuilder('t')

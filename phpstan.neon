@@ -6,3 +6,5 @@ parameters:
           paths:
            - src/Product/Entity/*
            - src/Security/Entity/*
+           - src/Warehouse/Entity/*
+           - src/Shared/Entity/*

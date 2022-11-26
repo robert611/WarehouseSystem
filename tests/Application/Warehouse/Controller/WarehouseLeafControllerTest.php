@@ -14,9 +14,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WarehouseLeafControllerTest extends WebTestCase
 {
-    private readonly KernelBrowser $client;
-    private readonly WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
-    private readonly TranslatorInterface $translator;
+    private KernelBrowser $client;
+    private UserRepository $userRepository;
+    private WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
+    private TranslatorInterface $translator;
 
     /**
      * @throws Exception

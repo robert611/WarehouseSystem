@@ -21,7 +21,7 @@ class ConfigIntegerCreator extends AbstractConfigCreator
     {
         $configEntity = new ConfigInteger();
         $configEntity->setName($name);
-        $configEntity->setValue($value);
+        $configEntity->setValue((int) $value);
 
         return $configEntity;
     }

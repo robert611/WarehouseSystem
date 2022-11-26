@@ -17,7 +17,7 @@ class LeafCapacityInRangeValidator extends ConstraintValidator
         $this->configService = $configService;
     }
 
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof LeafCapacityInRange) {
             throw new UnexpectedTypeException($constraint, LeafCapacityInRange::class);
@@ -28,8 +28,8 @@ class LeafCapacityInRangeValidator extends ConstraintValidator
 
         if ($value < $minimalCapacity || $value > $maximalCapacity) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ minimal }}', $minimalCapacity)
-                ->setParameter('{{ maximal }}', $maximalCapacity)
+                ->setParameter('{{ minimal }}', (string) $minimalCapacity)
+                ->setParameter('{{ maximal }}', (string) $maximalCapacity)
                 ->addViolation();
         }
     }

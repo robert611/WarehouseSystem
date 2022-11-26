@@ -7,14 +7,14 @@ use App\Warehouse\Entity\WarehouseItem;
 use App\Warehouse\Entity\WarehouseStructureTree;
 use App\Warehouse\Repository\WarehouseItemRepository;
 use App\Warehouse\Repository\WarehouseStructureTreeRepository;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class WarehouseItemRepositoryTest extends KernelTestCase
 {
-    private null|ObjectManager $entityManager;
-    private readonly WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
-    private readonly WarehouseItemRepository $warehouseItemRepository;
+    private null|EntityManagerInterface $entityManager;
+    private WarehouseStructureTreeRepository $warehouseStructureTreeRepository;
+    private WarehouseItemRepository $warehouseItemRepository;
 
     protected function setUp(): void
     {
