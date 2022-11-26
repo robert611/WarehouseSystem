@@ -1,27 +1,36 @@
-<div class="card card-body">
-    {{ form_start(form, {'attr': {'id': 'warehouse-leaf-configuration-form'}}) }}
-    <div class="row">
-        <div class="col">
-            {{ form_label(form.capacity) }}
-            {{ form_widget(form.capacity, {'attr': {'class': 'form-control mt-2'}}) }}
-            <div class="error-msg mt-2">
-                {{ form_errors(form.capacity) }}
+<div class="card-materialize custom-card-border-top-grey">
+    <div class="card-materialize-content">
+        {{ form_start(form, {'attr': {'id': 'warehouse-leaf-configuration-form'}}) }}
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.capacity) }}
+                {{ form_widget(form.capacity, {'attr': {'class': 'form-control mt-2'}}) }}
+                <div class="error-msg mt-2">
+                    {{ form_errors(form.capacity) }}
+                </div>
+            </div>
+            <div class="col">
+                {{ form_label(form.dimension) }}
+                {{ form_widget(form.dimension, {'attr': {'class': 'form-control mt-2'}}) }}
+                <div class="error-msg mt-2">
+                    {{ form_errors(form.dimension) }}
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{ form_label(form.dimension) }}
-            {{ form_widget(form.dimension, {'attr': {'class': 'form-control mt-2'}}) }}
-            <div class="error-msg mt-2">
-                {{ form_errors(form.dimension) }}
+        <div class="row">
+            <div class="col">
+                <div class="error-msg mt-2">
+                    {{ form_errors(form) }}
+                </div>
             </div>
         </div>
+        {% for message in app.flashes('warehouse_leaf_configuration_success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        <button class="btn btn-success mt-1">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
     </div>
-    {% for message in app.flashes('warehouse_leaf_configuration_success') %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
-    <button class="btn btn-success mt-1">{{ button_label|default('Save') }}</button>
-    {{ form_end(form) }}
 </div>

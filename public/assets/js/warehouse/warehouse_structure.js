@@ -14,7 +14,9 @@ export const warehouseStructure = {
         });
 
         const goBackButton = document.getElementById('warehouse-structure-go-back');
-        goBackButton.addEventListener('click', warehouseStructure.goBack);
+        if (goBackButton) {
+            goBackButton.addEventListener('click', warehouseStructure.goBack);
+        }
     },
     createWarehouseStructureElement: function (event) {
         event.preventDefault();
@@ -60,7 +62,9 @@ export const warehouseStructure = {
     },
     goBack: async function (event) {
         const endpoint = event.target.getAttribute('data-endpoint');
+        const parentNodeId = event.target.getAttribute('data-nodeId');
         await warehouseStructure.refreshNodesList(endpoint).then();
+        await warehouseStructure.renderNewForm(parentNodeId);
     },
     renderNewForm: async function (nodeId) {
         const endpoint = document.getElementById('warehouse-structure-new-form-endpoint').value;

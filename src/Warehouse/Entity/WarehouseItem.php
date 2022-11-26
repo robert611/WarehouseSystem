@@ -27,6 +27,9 @@ class WarehouseItem
     #[ORM\JoinColumn(nullable: false)]
     private ?WarehouseStructureTree $node;
 
+    #[ORM\Column(type: 'smallint')]
+    private ?int $position;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class WarehouseItem
     public function setNode(?WarehouseStructureTree $node): self
     {
         $this->node = $node;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

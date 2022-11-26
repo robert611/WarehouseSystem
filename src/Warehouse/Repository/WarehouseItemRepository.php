@@ -5,6 +5,8 @@ namespace App\Warehouse\Repository;
 use App\Warehouse\Entity\WarehouseItem;
 use App\Warehouse\Model\Enum\WarehouseItemStatusEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -50,5 +52,23 @@ class WarehouseItemRepository extends ServiceEntityRepository
             ->setParameter('status', (WarehouseItemStatusEnum::FREE)->toString())
             ->getQuery()
             ->getResult()[0]['count'];
+    }
+
+    public function getLastNotFreeItemPosition(int $nodeId): ?int
+    {
+        try {
+            $result = $this->createQueryBuilder('item')
+                ->select('item.position')
+                ->where('item.node = :nodeId')
+                ->andWhere('item.status != :status')
+                ->setParameter('nodeId', $nodeId)
+                ->setParameter('status', (WarehouseItemStatusEnum::FREE)->toString())
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException | NonUniqueResultException) {
+            return null;
+        }
+
+        return $result;
     }
 }

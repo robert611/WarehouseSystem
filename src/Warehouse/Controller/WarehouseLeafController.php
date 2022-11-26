@@ -2,8 +2,10 @@
 
 namespace App\Warehouse\Controller;
 
+use App\Warehouse\Entity\WarehouseLeafSettings;
 use App\Warehouse\Entity\WarehouseStructureTree;
 use App\Warehouse\Form\WarehouseLeafSettingsType;
+use App\Warehouse\Message\ConfigureLeafItems;
 use App\Warehouse\Validator\DTO\SetNodeAsLeafDTO;
 use App\Warehouse\Validator\DTO\UnsetAsLeafDTO;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -21,24 +24,23 @@ class WarehouseLeafController extends AbstractController
     private EntityManagerInterface $entityManager;
     private ValidatorInterface $validator;
     private TranslatorInterface $translator;
+    private MessageBusInterface $bus;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ValidatorInterface $validator,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MessageBusInterface $bus
     ) {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->translator = $translator;
+        $this->bus = $bus;
     }
 
     #[Route('/open/{id}', name: 'app_warehouse_leaf_open', methods: ['GET'])]
     public function open(WarehouseStructureTree $node): Response
     {
-        /* Chyba widok standardowy na górze ładny formularz do konfiguracji pojemnika */
-        /* Na dole tabelka z miejscami magazynowymi */
-        /* Ewentualnie formularz może być dostępny pod jakimś modalu w strukturze magazynowej jako kolejny przycisk */
-        /* Jeśli limit to 200 miejsc to być może powinna być tam paginacja */
         return $this->render('warehouse/warehouse_leaf/index.html.twig', [
             'node' => $node,
         ]);
@@ -47,7 +49,7 @@ class WarehouseLeafController extends AbstractController
     #[Route('/save/configuration/{id}', name: 'app_warehouse_leaf_save_configuration', methods: ['GET', 'POST'])]
     public function saveConfiguration(WarehouseStructureTree $node, Request $request): Response
     {
-        $warehouseLeafSettings = $node->getWarehouseLeafSettings();
+        $warehouseLeafSettings = $node->getWarehouseLeafSettings() ?? new WarehouseLeafSettings();
         $form = $this->createForm(WarehouseLeafSettingsType::class, $warehouseLeafSettings, [
             'action' => $this->generateUrl('app_warehouse_leaf_save_configuration', ['id' => $node->getId()])
         ]);
@@ -58,6 +60,8 @@ class WarehouseLeafController extends AbstractController
             $this->entityManager->persist($warehouseLeafSettings);
             $this->entityManager->flush();
 
+            $this->bus->dispatch(new ConfigureLeafItems($node->getId(), $warehouseLeafSettings->getCapacity()));
+
             $this->addFlash(
                 'warehouse_leaf_configuration_success',
                 $this->translator->trans('saved_leaf_configuration')
@@ -66,6 +70,14 @@ class WarehouseLeafController extends AbstractController
 
         return $this->render('warehouse/warehouse_leaf/configuration_form.html.twig', [
            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/items/table/{id}', name: 'app_warehouse_leaf_items_table', methods: ['GET'])]
+    public function renderItemsTable(WarehouseStructureTree $node): Response
+    {
+        return $this->render('warehouse/warehouse_leaf/leaf_items_table.html.twig', [
+            'node' => $node,
         ]);
     }
 
