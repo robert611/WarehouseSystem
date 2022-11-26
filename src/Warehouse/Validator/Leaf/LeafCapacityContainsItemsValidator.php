@@ -17,7 +17,7 @@ class LeafCapacityContainsItemsValidator extends ConstraintValidator
         $this->warehouseItemRepository = $warehouseItemRepository;
     }
 
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof LeafCapacityContainsItems) {
             throw new UnexpectedTypeException($constraint, LeafCapacityContainsItems::class);

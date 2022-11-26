@@ -115,8 +115,8 @@ class ProductControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', $firstProduct->getName());
         $this->assertSelectorTextContains('#product-description-section > p', $firstProduct->getDescription());
         $this->assertSelectorTextContains('#product-other-info-section', $firstProduct->getCreatedAt()->format('Y-m-d H:i:s'));
-        $this->assertSelectorTextContains('#product-other-info-section', $firstProduct->getBuyNowPrice());
-        $this->assertSelectorTextContains('#product-other-info-section', $firstProduct->getAuctionPrice());
+        $this->assertSelectorTextContains('#product-other-info-section', (string) $firstProduct->getBuyNowPrice());
+        $this->assertSelectorTextContains('#product-other-info-section', (string) $firstProduct->getAuctionPrice());
         $this->assertSelectorTextContains('#product-other-info-section', $saleTypeTranslation);
     }
 

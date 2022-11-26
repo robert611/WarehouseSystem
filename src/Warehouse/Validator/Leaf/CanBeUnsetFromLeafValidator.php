@@ -22,7 +22,7 @@ class CanBeUnsetFromLeafValidator extends ConstraintValidator
         $this->translator = $translator;
     }
 
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof CanBeUnsetFromLeaf) {
             throw new UnexpectedTypeException($constraint, CanBeUnsetFromLeaf::class);

@@ -2,11 +2,12 @@
 
 namespace App\Shared\Entity;
 
+use App\Shared\Entity\Interface\ConfigEntity;
 use App\Shared\Repository\ConfigIntegerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ConfigIntegerRepository::class)]
-class ConfigInteger
+class ConfigInteger implements ConfigEntity
 {
     public const WAREHOUSE_LEAF_MINIMAL_CAPACITY = 'WAREHOUSE_LEAF_MINIMAL_CAPACITY';
     public const WAREHOUSE_LEAF_MAXIMUM_CAPACITY = 'WAREHOUSE_LEAF_MAXIMUM_CAPACITY';

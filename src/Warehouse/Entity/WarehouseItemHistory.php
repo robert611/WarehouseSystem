@@ -7,6 +7,7 @@ use App\Security\Entity\User;
 use App\Warehouse\Repository\WarehouseItemHistoryRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: WarehouseItemHistoryRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -79,8 +80,9 @@ class WarehouseItemHistory
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(null|User|UserInterface $user): self
     {
+        /** @var User $user */
         $this->user = $user;
 
         return $this;

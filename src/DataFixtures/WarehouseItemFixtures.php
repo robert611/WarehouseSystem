@@ -50,6 +50,9 @@ class WarehouseItemFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 
+    /**
+     * @return array<int, array<mixed>>
+     */
     private function getWarehouseItems(): array
     {
         return [

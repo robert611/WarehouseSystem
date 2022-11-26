@@ -14,7 +14,7 @@ class ConfigCreatorFactory
         $this->configIntegerCreator = $configIntegerCreator;
     }
 
-    /* @return array<AbstractConfigCreator> */
+    /** @return array<AbstractConfigCreator> */
     public function getConfigCreators(): array
     {
         return [
