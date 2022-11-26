@@ -26,6 +26,11 @@ class LeafCapacityContainsItemsValidator extends ConstraintValidator
         /** @var WarehouseLeafSettings $leafSettings */
         $leafSettings = $value;
 
+        /* Leaf settings has not been created yet */
+        if ($leafSettings->getNode() === null) {
+            return;
+        }
+
         $lastNotFreeItemPosition = $this->warehouseItemRepository->getLastNotFreeItemPosition(
             $leafSettings->getNode()->getId()
         );

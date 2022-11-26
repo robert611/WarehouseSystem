@@ -57,6 +57,10 @@ class WarehouseLeafSettings
 
     public function getNode(): ?WarehouseStructureTree
     {
+        if (!isset($this->node)) {
+            return null;
+        }
+
         return $this->node;
     }
 
