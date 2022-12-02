@@ -19,7 +19,7 @@ class ProductParameter
     #[ORM\Column(type: 'string', length: 255)]
     private string $value;
 
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productParameters')]
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'parameters')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product;
 
