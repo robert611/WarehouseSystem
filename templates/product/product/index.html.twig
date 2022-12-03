@@ -22,7 +22,7 @@
                         <div class="mx-md-3">
                             <b>{{ product.name }}</b>
                             <p class="text-justify">{{ product.description }}</p>
-                            <p>
+                            <p class="mb-0">
                                 {% if product.saleType in [saleTypeEnum.AUCTION.value, saleTypeEnum.BOTH.value] %}
                                     Licytacja: {{ product.auctionPrice }} zł <br>
                                 {% endif %}
@@ -32,7 +32,7 @@
                             </p>
                         </div>
                         <div class="clear-both"></div>
-                        <div class="mx-md-3">
+                        <div class="mx-md-3 mt-2">
                             <a href="{{ path('app_product_show', {id: product.id}) }}" class="btn btn-outline-success">
                                 {{ 'show'|trans|capitalize }}
                             </a>

@@ -45,8 +45,8 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductPicture::class, orphanRemoval: true)]
     private Collection $productPictures;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductParameter::class, orphanRemoval: true)]
-    private Collection $productParameters;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductParameter::class, cascade: ['persist'], orphanRemoval: true)]
+    private Collection $parameters;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: WarehouseItem::class)]
     private Collection $warehouseItems;
@@ -54,7 +54,7 @@ class Product
     public function __construct()
     {
         $this->productPictures = new ArrayCollection();
-        $this->productParameters = new ArrayCollection();
+        $this->parameters = new ArrayCollection();
         $this->warehouseItems = new ArrayCollection();
     }
 
@@ -184,24 +184,25 @@ class Product
     /**
      * @return Collection<int, ProductParameter>
      */
-    public function getProductParameters(): Collection
+    public function getParameters(): Collection
     {
-        return $this->productParameters;
+        return $this->parameters;
     }
 
-    public function addProductParameter(ProductParameter $productParameter): self
+
+    public function addParameter(ProductParameter $productParameter): self
     {
-        if (!$this->productParameters->contains($productParameter)) {
-            $this->productParameters[] = $productParameter;
+        if (!$this->parameters->contains($productParameter)) {
+            $this->parameters[] = $productParameter;
             $productParameter->setProduct($this);
         }
 
         return $this;
     }
 
-    public function removeProductParameter(ProductParameter $productParameter): self
+    public function removeParameter(ProductParameter $productParameter): self
     {
-        if ($this->productParameters->removeElement($productParameter)) {
+        if ($this->parameters->removeElement($productParameter)) {
             // set the owning side to null (unless already changed)
             if ($productParameter->getProduct() === $this) {
                 $productParameter->setProduct(null);
