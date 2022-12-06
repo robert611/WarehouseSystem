@@ -5,7 +5,6 @@ namespace App\Product\Form;
 use App\Product\Form\DTO\ProductSearchEngineDTO;
 use App\Product\Model\Enum\SaleTypeEnum;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,8 +21,8 @@ class ProductSearchEngineType extends AbstractType
             ->add('saleType', EnumType::class, [
                 'class' => SaleTypeEnum::class,
             ])
-            ->add('createdAtFrom', DateTimeType::class)
-            ->add('createdAtTo', DateTimeType::class)
+            ->add('createdAtFrom', TextType::class, )
+            ->add('createdAtTo', TextType::class)
         ;
     }
 
