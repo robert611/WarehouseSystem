@@ -23,7 +23,10 @@ class ProductSearchEngineController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return new JsonResponse(['products' => [['id' => 1, 'name' => 'hello']]]);
+            $productSearchEngineFormDTO = $form->getData();
+            $products = $productRepository->searchEngineResults($productSearchEngineFormDTO);
+
+            return new JsonResponse(['products' => $products]);
         }
 
         return $this->render('product/search_engine/index.html.twig', [
