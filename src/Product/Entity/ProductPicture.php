@@ -4,6 +4,7 @@ namespace App\Product\Entity;
 
 use App\Product\Repository\ProductPictureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductPictureRepository::class)]
 class ProductPicture
@@ -14,6 +15,7 @@ class ProductPicture
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['search_engine'])]
     private string $path;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productPictures')]
@@ -22,6 +24,7 @@ class ProductPicture
 
     #[ORM\ManyToOne(targetEntity: ProductPictureType::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['search_engine'])]
     private ProductPictureType $type;
 
     public function getId(): int

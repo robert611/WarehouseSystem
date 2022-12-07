@@ -5,6 +5,7 @@ namespace App\Product\Controller;
 use App\Product\Form\DTO\ProductSearchEngineDTO;
 use App\Product\Form\ProductSearchEngineType;
 use App\Product\Repository\ProductRepository;
+use App\Product\Serializer\SearchEngineSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class ProductSearchEngineController extends AbstractController
             $productSearchEngineFormDTO = $form->getData();
             $products = $productRepository->searchEngineResults($productSearchEngineFormDTO);
 
-            return new JsonResponse(['products' => $products]);
+            return new JsonResponse(['products' => SearchEngineSerializer::normalizeSearchEngineResults($products)]);
         }
 
         return $this->render('product/search_engine/index.html.twig', [
