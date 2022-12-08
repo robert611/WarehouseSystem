@@ -2,6 +2,7 @@
 
 namespace App\Product\Serializer;
 
+use App\Product\Model\Enum\SaleTypeEnum;
 use DateTimeInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
@@ -19,10 +20,15 @@ class SearchEngineSerializer
         $dateCallback = function ($innerObject) {
             return $innerObject instanceof DateTimeInterface ? $innerObject->format('Y-m-d H:i:s') : '';
         };
+        $saleTypeCallback = function ($innerObject) {
+            $name = (SaleTypeEnum::translateCaseToString($innerObject));
+            return ['type' => $innerObject, 'name' => $name];
+        };
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $defaultContext = [
             AbstractNormalizer::CALLBACKS => [
                 'createdAt' => $dateCallback,
+                'saleType' => $saleTypeCallback,
             ],
         ];
 

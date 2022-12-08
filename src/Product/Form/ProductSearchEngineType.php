@@ -16,7 +16,7 @@ class ProductSearchEngineType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nazwa',
+                'label' => 'Name',
             ])
             ->add('saleType', EnumType::class, [
                 'class' => SaleTypeEnum::class,

@@ -32,3 +32,5 @@ validator.contains_children_message: 'This element contains subelements.'
 validator.contains_items_message: 'This container contains magazine numbers that are not free.'
 saved_leaf_configuration: 'Configuration has been saved successfully'
 search: Search
+Created at from: Created at from
+Created at to: Created at to

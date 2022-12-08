@@ -35,8 +35,8 @@ class SearchResults extends Component {
 
     render() {
         const {products} = this.state;
-        const productRows = products.map((product) => {
-            return <ProductRow key={product.id} product={product}></ProductRow>
+        const productRows = products.map((product, index) => {
+            return <ProductRow key={product.id} product={product} index={index}></ProductRow>
         });
         return (
             <div className="table-responsive">
@@ -45,8 +45,11 @@ class SearchResults extends Component {
                     <tr>
                         <th>Lp.</th>
                         <th>Identifier</th>
-                        <th>Product</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Typ sprzedaży</th>
+                        <th>Licytacja</th>
+                        <th>Kup teraz</th>
+                        <th>Użytkownik</th>
                     </tr>
                     </thead>
                     <tbody>
