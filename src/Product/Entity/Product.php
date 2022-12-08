@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -18,31 +19,39 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['search_engine'])]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 86)]
+    #[Groups(['search_engine'])]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 1024)]
     private string $description;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['search_engine'])]
     private ?float $auctionPrice;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['search_engine'])]
     private ?float $buyNowPrice;
 
     #[ORM\Column(type: 'smallint')]
+    #[Groups(['search_engine'])]
     private int $saleType;
 
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['search_engine'])]
     private DateTimeImmutable $createdAt;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['search_engine'])]
     private User|UserInterface $user;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductPicture::class, orphanRemoval: true)]
+    #[Groups(['search_engine'])]
     private Collection $productPictures;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductParameter::class, cascade: ['persist'], orphanRemoval: true)]

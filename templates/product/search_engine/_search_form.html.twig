@@ -1,0 +1,41 @@
+<div class="card-materialize custom-card-border-top-grey">
+    <div class="card-materialize-content">
+        {{ form_start(form, {'attr': {'id': 'product-search-engine-form'}}) }}
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control mt-1'}}) }}
+                <div class="error-msg">
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                {{ form_label(form.saleType) }}
+                {{ form_widget(form.saleType, {'attr': {'class': 'form-control mt-1'}}) }}
+                <div class="error-msg">
+                    {{ form_errors(form.saleType) }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                {{ form_label(form.createdAtFrom) }}
+                {{ form_widget(form.createdAtFrom, {'type': 'date', 'attr': {'class': 'form-control mt-1'}}) }}
+                <div class="error-msg">
+                    {{ form_errors(form.createdAtFrom) }}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                {{ form_label(form.createdAtTo) }}
+                {{ form_widget(form.createdAtTo, {'type': 'date', 'attr': {'class': 'form-control mt-1'}}) }}
+                <div class="error-msg">
+                    {{ form_errors(form.createdAtTo) }}
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-success float-end mt-3" id="product-search-engine-form-button">
+                    {{ 'search'|trans }}
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

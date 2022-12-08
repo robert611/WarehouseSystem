@@ -31,3 +31,6 @@ created_at: Data Utworzenia
 validator.contains_children_message: 'Ten element zawiera pod elementy.'
 validator.contains_items_message: 'Ten pojemnik zawiera miejsca magazynowe, które nie są puste.'
 saved_leaf_configuration: 'Konfiguracja została zapisana'
+search: Szukaj
+Created at from: Stworzony od
+Created at to: Stworzony do

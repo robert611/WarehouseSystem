@@ -3,7 +3,9 @@
 namespace App\Product\Repository;
 
 use App\Product\Entity\Product;
+use App\Product\Form\DTO\ProductSearchEngineDTO;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +41,26 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Product[]
+     */
+    public function searchEngineResults(ProductSearchEngineDTO $productSearchEngineFormDTO): array
+    {
+        $queryBuilder = $this->createQueryBuilder('product')
+            ->select('product');
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $this->addSearchEngineRequirements($queryBuilder, $productSearchEngineFormDTO);
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function addSearchEngineRequirements(QueryBuilder $queryBuilder, ProductSearchEngineDTO $formDTO): void
+    {
+        if ($formDTO->getName()) {
+            $queryBuilder->andWhere('product.name = :name');
+            $queryBuilder->setParameter('name', $formDTO->getName());
+        }
+    }
 }

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3" id="product-search-engine-app">
+        <div id="product-search-engine-form-container">
+            {% include "product/search_engine/_search_form.html.twig" %}
+        </div>
+        <div id="product-search-engine-results">
+            {% include "product/search_engine/_search_results.html.twig" %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('product_search_engine') }}
+{% endblock %}

@@ -8,10 +8,21 @@
                 </a>
             </li>
             <li>
-                <a href="{{ path('app_product_index') }}" class="nav-link text-white">
-                    <i class="fa-solid fa-shirt me-1"></i>
-                    Products
-                </a>
+                <div class="dropdown">
+                    <a href="{{ path('app_product_index') }}" class="nav-link text-white dropdown-toggle"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-shirt me-1"></i>
+                        Products
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="text-center">
+                            <a class="dropdown-item nav-link" href="{{ path('product_search_engine_index') }}">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Wyszukiwarka
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li>
                 <div class="dropdown">
