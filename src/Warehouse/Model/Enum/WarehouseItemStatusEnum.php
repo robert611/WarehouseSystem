@@ -16,7 +16,7 @@ enum WarehouseItemStatusEnum implements TransformableToString
         return match($this)
         {
             self::FREE => 'FREE',
-            self::RESERVED => 'GREEN',
+            self::RESERVED => 'RESERVED',
             self::TAKEN => 'TAKEN',
             self::BLOCKED => 'BLOCKED',
         };
