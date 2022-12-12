@@ -71,4 +71,13 @@ class WarehouseItemRepository extends ServiceEntityRepository
 
         return $result;
     }
+
+    public function getStatusCount(): array
+    {
+        return $this->createQueryBuilder('item')
+            ->select('item.status, count(item) as count')
+            ->groupBy('item.status')
+            ->getQuery()
+            ->getResult();
+    }
 }
