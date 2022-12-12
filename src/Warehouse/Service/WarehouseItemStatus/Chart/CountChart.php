@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Warehouse\Service\Chart;
+namespace App\Warehouse\Service\WarehouseItemStatus\Chart;
 
 use App\Warehouse\Model\Enum\WarehouseItemStatusEnum;
 use App\Warehouse\Repository\WarehouseItemRepository;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
-class WarehouseItemStatusCountChart
+class CountChart
 {
     private ChartBuilderInterface $chartBuilder;
     private WarehouseItemRepository $warehouseItemRepository;

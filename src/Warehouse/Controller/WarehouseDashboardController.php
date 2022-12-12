@@ -2,7 +2,7 @@
 
 namespace App\Warehouse\Controller;
 
-use App\Warehouse\Service\Chart\WarehouseItemStatusCountChart;
+use App\Warehouse\Service\WarehouseItemStatus\Chart\CountChart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,20 +10,20 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/warehouse')]
 class WarehouseDashboardController extends AbstractController
 {
-    private WarehouseItemStatusCountChart $warehouseItemStatusChart;
+    private CountChart $countChart;
 
-    public function __construct(WarehouseItemStatusCountChart $warehouseItemStatusChart)
+    public function __construct(CountChart $countChart)
     {
-        $this->warehouseItemStatusChart = $warehouseItemStatusChart;
+        $this->countChart = $countChart;
     }
 
     #[Route('/', name: 'app_warehouse_index', methods: ['GET'])]
     public function index(): Response
     {
-        $warehouseItemStatusChart = $this->warehouseItemStatusChart->buildChart();
+        $countChart = $this->countChart->buildChart();
 
         return $this->render('warehouse/dashboard/index.html.twig', [
-            'warehouseItemStatusChart' => $warehouseItemStatusChart,
+            'countChart' => $countChart,
         ]);
     }
 }
