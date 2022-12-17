@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Warehouse\Service\WarehouseItemStatus\Chart;
+namespace App\Warehouse\Service\Chart\WarehouseItemStatus;
 
 use App\Warehouse\Repository\WarehouseItemRepository;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;

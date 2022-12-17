@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Warehouse\Service\WarehouseItemStatus\Chart;
+namespace App\Warehouse\Service\Chart\WarehouseItemStatus;
 
 use App\Warehouse\Model\Enum\WarehouseItemStatusEnum;
 use App\Warehouse\Repository\WarehouseItemHistoryRepository;

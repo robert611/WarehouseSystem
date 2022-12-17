@@ -2,8 +2,8 @@
 
 namespace App\Warehouse\Controller;
 
-use App\Warehouse\Service\WarehouseItemStatus\Chart\ChangesChart;
-use App\Warehouse\Service\WarehouseItemStatus\Chart\CountChart;
+use App\Warehouse\Service\Chart\WarehouseItemStatus\ChangesChart;
+use App\Warehouse\Service\Chart\WarehouseItemStatus\CountChart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
