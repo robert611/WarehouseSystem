@@ -2,13 +2,14 @@
 
 namespace App\Warehouse\Service\WarehouseItemStatus\Chart;
 
-use App\Warehouse\Model\Enum\WarehouseItemStatusEnum;
 use App\Warehouse\Repository\WarehouseItemRepository;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
 class CountChart
 {
+    use ChartBackgroundColorTrait;
+
     private ChartBuilderInterface $chartBuilder;
     private WarehouseItemRepository $warehouseItemRepository;
 
@@ -52,16 +53,5 @@ class CountChart
 
         return $chart;
     }
-
-    private function getStatusBackgroundColor(string $statusName): string
-    {
-        $backgroundColors = [
-            (WarehouseItemStatusEnum::FREE)->toString() => '#388e3c',
-            (WarehouseItemStatusEnum::RESERVED)->toString() => '#0277bd',
-            (WarehouseItemStatusEnum::TAKEN)->toString() => '#c62828',
-            (WarehouseItemStatusEnum::BLOCKED)->toString() => '#fb8c00',
-        ];
-
-        return $backgroundColors[$statusName];
-    }
 }
+
