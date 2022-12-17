@@ -9,12 +9,18 @@
             </li>
             <li>
                 <div class="dropdown">
-                    <a href="{{ path('app_product_index') }}" class="nav-link text-white dropdown-toggle"
+                    <a href="#" class="nav-link text-white dropdown-toggle"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-shirt me-1"></i>
                         Products
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="text-center">
+                            <a class="dropdown-item nav-link" href="{{ path('app_product_index') }}">
+                                <i class="fa-solid fa-shirt"></i>
+                                Lista produktów
+                            </a>
+                        </li>
                         <li class="text-center">
                             <a class="dropdown-item nav-link" href="{{ path('product_search_engine_index') }}">
                                 <i class="fa-solid fa-magnifying-glass"></i>
