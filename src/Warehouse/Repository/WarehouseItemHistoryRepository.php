@@ -38,4 +38,16 @@ class WarehouseItemHistoryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function getDataForChangesChart(): array
+    {
+        return $this->createQueryBuilder('item')
+            ->select('item.status, count(item) as count, DATE(item.createdAt) as createdAtDate')
+            ->where('DATE(item.createdAt) >= :minimumDate')
+            ->groupBy('item.status', 'createdAtDate')
+            ->setParameter('minimumDate', (new \DateTime())->modify('-30 days')->format('Y-m-d'))
+            ->orderBy('createdAtDate')
+            ->getQuery()
+            ->getResult();
+    }
 }
