@@ -21,4 +21,22 @@ trait BasePaginationTrait
 
         return $pageNumber;
     }
+
+    public function getPagesCount(int $totalItems, int $resultsPerPage): int
+    {
+        return ceil($totalItems / $resultsPerPage);
+    }
+
+    private function getValidatedPageNumber(int $pageNumber, int $pagesCount): int
+    {
+        if ($pageNumber < 1) {
+            return 1;
+        }
+
+        if ($pageNumber > $pagesCount) {
+            return $pagesCount;
+        }
+
+        return $pageNumber;
+    }
 }

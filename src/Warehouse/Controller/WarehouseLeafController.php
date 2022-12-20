@@ -10,6 +10,7 @@ use App\Warehouse\Validator\DTO\SetNodeAsLeafDTO;
 use App\Warehouse\Validator\DTO\UnsetAsLeafDTO;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,9 +74,11 @@ class WarehouseLeafController extends AbstractController
         ]);
     }
 
-    #[Route('/items/table/{id}', name: 'app_warehouse_leaf_items_table', methods: ['GET'])]
-    public function renderItemsTable(WarehouseStructureTree $node): Response
+    #[Route('/items/table/{node}/{page}', name: 'app_warehouse_leaf_items_table', methods: ['GET'])]
+    public function renderItemsTable(WarehouseStructureTree $node, int $page = 1): Response
     {
+
+
         return $this->render('warehouse/warehouse_leaf/leaf_items_table.html.twig', [
             'node' => $node,
         ]);
