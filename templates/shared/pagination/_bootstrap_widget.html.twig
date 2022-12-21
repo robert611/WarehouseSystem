@@ -1,17 +1,15 @@
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+<div class="flex align-items-center float-end">
+    <select class="form-control pagination-results-per-page-select me-2"
+            aria-label="Pagination select number of elements on the page">
+        <option>25</option>
+        <option>50</option>
+        <option>75</option>
+        <option>100</option>
+    </select>
+    <input type="number" class="form-control pagination-input me-2" aria-label="pagination-input" value="1">
+    / <span class="ms-2 me-2">1005</span>
+    <i class="fa-solid fa-angles-left pagination-icon"></i>
+    <i class="fa-solid fa-chevron-left pagination-icon"></i>
+    <i class="fa-solid fa-chevron-right pagination-icon"></i>
+    <i class="fa-solid fa-angles-right pagination-icon"></i>
+</div>
