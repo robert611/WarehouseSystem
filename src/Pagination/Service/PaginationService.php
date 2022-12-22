@@ -18,6 +18,7 @@ class PaginationService
     ): Pagination{
         $totalItems = $repository->getPaginationResultsCount($formData);
         $pagesCount = $this->getPagesCount($totalItems, $pagination->getResultsPerPage());
+        $pagination->setPagesCount($pagesCount);
         $pagination->setPageNumber($this->getValidatedPageNumber($pagination->getPageNumber(), $pagesCount));
         $pagination->setPreviousPage($this->getPreviousPage($pagination->getPageNumber(), $pagesCount));
         $pagination->setNextPage($this->getNextPage($pagination->getPageNumber(), $pagesCount));

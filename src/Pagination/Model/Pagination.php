@@ -8,6 +8,7 @@ class Pagination
     private ?int $previousPage;
     private ?int $nextPage;
     private ?int $resultsPerPage;
+    private ?int $pagesCount;
     private array $resultsPerPageOptions = [25, 50, 100, 200];
     private array $results;
 
@@ -17,6 +18,7 @@ class Pagination
         $this->previousPage = null;
         $this->nextPage = null;
         $this->resultsPerPage = null;
+        $this->pagesCount = null;
         $this->results = [];
     }
 
@@ -35,7 +37,7 @@ class Pagination
         return $this->previousPage;
     }
 
-    public function setPreviousPage(int $previousPage): void
+    public function setPreviousPage(?int $previousPage): void
     {
         $this->previousPage = $previousPage;
     }
@@ -45,7 +47,7 @@ class Pagination
         return $this->nextPage;
     }
 
-    public function setNextPage(int $nextPage): void
+    public function setNextPage(?int $nextPage): void
     {
         $this->nextPage = $nextPage;
     }
@@ -58,6 +60,16 @@ class Pagination
     public function setResultsPerPage(int $resultsPerPage): void
     {
         $this->resultsPerPage = $resultsPerPage;
+    }
+
+    public function getPagesCount(): ?int
+    {
+        return $this->pagesCount;
+    }
+
+    public function setPagesCount(int $pagesCount): void
+    {
+        $this->pagesCount = $pagesCount;
     }
 
     public function getResultsPerPageOptions(): array
@@ -78,5 +90,10 @@ class Pagination
     public function setResults(array $results): void
     {
         $this->results = $results;
+    }
+
+    public function getOffset(): int
+    {
+        return ($this->getPageNumber() - 1) * $this->getResultsPerPage();
     }
 }
