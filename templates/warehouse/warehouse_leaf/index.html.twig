@@ -13,5 +13,5 @@
     <section id="warehouse-leaf-items-table" class="mt-4">
         {{ render(controller('App\\Warehouse\\Controller\\WarehouseLeafController::renderItemsTable', {'id': node.id})) }}
     </section>
-    <input type="hidden" id="render-items-table-endpoint" value="{{ path('app_warehouse_leaf_items_table', {'id': node.id}) }}">
+    <input type="hidden" id="render-items-table-endpoint" value="{{ path('app_warehouse_leaf_items_table', {'node': node.id}) }}">
 </div>

@@ -40,7 +40,7 @@ class WarehouseStructureTreeRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array<WarehouseStructureTreeRepository>
+     * @return array<WarehouseStructureTree>
      */
     public function findWithoutParent(): array
     {

@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive" id="swup">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -9,9 +9,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in node.warehouseItems %}
+            {% for item in pagination.results %}
                 <tr>
-                    <td>{{ loop.index }}</td>
+                    <td>{{ loop.index + ((pagination.pageNumber - 1) * pagination.resultsPerPage )}}</td>
                     <td>{{ item.identifier }}</td>
                     <td>
                         {% if item.product %}
@@ -28,4 +28,11 @@
             {% endfor %}
         </tbody>
     </table>
+    {{ include ("shared/pagination/_swup_widget.html.twig", {
+        pagination: pagination,
+        firstPageUrl: path('app_warehouse_leaf_items_table', {node: node.id, page: 1}),
+        previousPageUrl: path('app_warehouse_leaf_items_table', {node: node.id, page: pagination.previousPage}),
+        nextPageUrl: path('app_warehouse_leaf_items_table', {node: node.id, page: pagination.nextPage}),
+        lastPageUrl: path('app_warehouse_leaf_items_table', {node: node.id, page: pagination.pagesCount}),
+    }) }}
 </div>

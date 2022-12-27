@@ -29,6 +29,13 @@ class ProductController extends AbstractController
     {
         $saleCases = HashTable::getHashTableFromEnum(SaleTypeEnum::cases(), 'name');
 
+        // Things to handle
+        // Display product pictures from db not static link
+        // Symfony ux package lazy images, use it should be cool
+        // Symfony ux package crop image, to resize it, it would require rebuilding page for adding pictures
+        // Symfony ux swap to paginate, may be used wherever. Pagination looks cool. And seems very simple
+        // Symfony ux twig components, these are lovely
+
         return $this->render('product/product/index.html.twig', [
             'products' => $productRepository->findBy([], ['id' => 'DESC']),
             'saleTypeEnum' => $saleCases,
