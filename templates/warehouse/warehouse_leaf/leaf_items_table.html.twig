@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive" id="swup">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -9,9 +9,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in node.warehouseItems %}
+            {% for item in pagination.results %}
                 <tr>
-                    <td>{{ loop.index }}</td>
+                    <td>{{ loop.index + ((pagination.pageNumber - 1) * pagination.resultsPerPage )}}</td>
                     <td>{{ item.identifier }}</td>
                     <td>
                         {% if item.product %}
@@ -28,4 +28,5 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include "shared/pagination/_bootstrap_widget.html.twig" %}
 </div>

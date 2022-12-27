@@ -19,6 +19,11 @@
     font-size: 20px;
     padding-left: 3px;
     padding-right: 3px;
+    cursor: pointer;
+}
+
+.pagination-icon.text-muted {
+    cursor: default;
 }
 
 .pagination-icon.fa-angles-right, .pagination-icon.fa-angles-left {
@@ -27,8 +32,13 @@
 
 .pagination-results-per-page-select {
     border-radius: 0!important;
+    text-align: center;
 }
 
 .pagination-results-per-page-select:focus {
     box-shadow: none!important;
+}
+
+.pagination-controls a, .pagination-controls a:hover {
+    color: inherit;
 }

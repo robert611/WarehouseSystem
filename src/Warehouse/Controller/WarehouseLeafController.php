@@ -2,15 +2,16 @@
 
 namespace App\Warehouse\Controller;
 
+use App\Pagination\Service\PaginationService;
 use App\Warehouse\Entity\WarehouseLeafSettings;
 use App\Warehouse\Entity\WarehouseStructureTree;
 use App\Warehouse\Form\WarehouseLeafSettingsType;
 use App\Warehouse\Message\ConfigureLeafItems;
+use App\Warehouse\Repository\WarehouseItemRepository;
 use App\Warehouse\Validator\DTO\SetNodeAsLeafDTO;
 use App\Warehouse\Validator\DTO\UnsetAsLeafDTO;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,17 +27,23 @@ class WarehouseLeafController extends AbstractController
     private ValidatorInterface $validator;
     private TranslatorInterface $translator;
     private MessageBusInterface $bus;
+    private WarehouseItemRepository $warehouseItemsRepository;
+    private PaginationService $paginationService;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ValidatorInterface $validator,
         TranslatorInterface $translator,
-        MessageBusInterface $bus
+        MessageBusInterface $bus,
+        WarehouseItemRepository $warehouseItemsRepository,
+        PaginationService $paginationService
     ) {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->translator = $translator;
         $this->bus = $bus;
+        $this->warehouseItemsRepository = $warehouseItemsRepository;
+        $this->paginationService = $paginationService;
     }
 
     #[Route('/open/{id}', name: 'app_warehouse_leaf_open', methods: ['GET'])]
@@ -77,10 +84,13 @@ class WarehouseLeafController extends AbstractController
     #[Route('/items/table/{node}/{page}', name: 'app_warehouse_leaf_items_table', methods: ['GET'])]
     public function renderItemsTable(WarehouseStructureTree $node, int $page = 1): Response
     {
-
+        $formData = ['nodeId' => $node->getId()];
+        $pagination = PaginationService::createFromScratch($page);
+        $pagination = $this->paginationService->paginate($formData, $pagination, $this->warehouseItemsRepository);
 
         return $this->render('warehouse/warehouse_leaf/leaf_items_table.html.twig', [
             'node' => $node,
+            'pagination' => $pagination,
         ]);
     }
 

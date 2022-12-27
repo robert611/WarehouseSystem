@@ -1,15 +1,33 @@
-<div class="flex align-items-center float-end">
-    <select class="form-control pagination-results-per-page-select me-2"
+<div class="flex align-items-center float-end pagination-controls" {{ stimulus_controller('symfony/ux-swup/swup') }}>
+    <select class="form-control pagination-results-per-page-select me-2" disabled
             aria-label="Pagination select number of elements on the page">
-        <option>25</option>
-        <option>50</option>
-        <option>75</option>
-        <option>100</option>
+        {% for resultsPerPageOption in pagination.resultsPerPageOptions %}
+            <option>{{ resultsPerPageOption }}</option>
+        {% endfor %}
     </select>
-    <input type="number" class="form-control pagination-input me-2" aria-label="pagination-input" value="1">
-    / <span class="ms-2 me-2">1005</span>
-    <i class="fa-solid fa-angles-left pagination-icon"></i>
-    <i class="fa-solid fa-chevron-left pagination-icon"></i>
-    <i class="fa-solid fa-chevron-right pagination-icon"></i>
-    <i class="fa-solid fa-angles-right pagination-icon"></i>
+    <input type="number" disabled class="form-control pagination-input me-2" aria-label="pagination-input"
+           value="{{ pagination.pageNumber }}" min="1" max="{{ pagination.pagesCount }}">
+    / <span class="ms-2 me-2">{{ pagination.pagesCount }}</span>
+    {% if pagination.previousPage %}
+        <a href="{{ path('app_warehouse_leaf_items_table', {node: node.id, page: 1}) }}">
+            <i class="fa-solid fa-angles-left pagination-icon"></i>
+        </a>
+        <a href="{{ path('app_warehouse_leaf_items_table', {node: node.id, page: pagination.previousPage}) }}">
+            <i class="fa-solid fa-chevron-left pagination-icon"></i>
+        </a>
+    {% else %}
+        <a><i class="fa-solid fa-angles-left pagination-icon text-muted"></i></a>
+        <a><i class="fa-solid fa-chevron-left pagination-icon text-muted"></i></a>
+    {% endif %}
+    {% if pagination.nextPage %}
+        <a href="{{ path('app_warehouse_leaf_items_table', {node: node.id, page: pagination.nextPage}) }}">
+            <i class="fa-solid fa-chevron-right pagination-icon"></i>
+        </a>
+        <a href="{{ path('app_warehouse_leaf_items_table', {node: node.id, page: pagination.pagesCount}) }}">
+            <i class="fa-solid fa-angles-right pagination-icon"></i>
+        </a>
+    {% else %}
+        <a><i class="fa-solid fa-chevron-right pagination-icon text-muted"></i></a>
+        <a><i class="fa-solid fa-angles-right pagination-icon text-muted"></i></a>
+    {% endif %}
 </div>
