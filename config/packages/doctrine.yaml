@@ -34,6 +34,12 @@ doctrine:
                 prefix: 'App\Shared\Entity'
                 alias: App
                 type: attribute
+            App\Allegro:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Allegro/Entity'
+                prefix: 'App\Allegro\Entity'
+                alias: App
+                type: attribute
 #            App:
 #                is_bundle: false
 #                dir: '%kernel.project_dir%/src/Entity'
