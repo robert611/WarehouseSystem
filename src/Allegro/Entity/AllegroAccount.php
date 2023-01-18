@@ -77,4 +77,15 @@ class AllegroAccount
 
         return $this;
     }
+
+    public static function from(string $name, string $clientId, string $clientSecret, string $redirectUri): self
+    {
+        $allegroAccount = new AllegroAccount();
+        $allegroAccount->name = $name;
+        $allegroAccount->clientId = $clientId;
+        $allegroAccount->clientSecret = $clientSecret;
+        $allegroAccount->redirectUri = $redirectUri;
+
+        return $allegroAccount;
+    }
 }
