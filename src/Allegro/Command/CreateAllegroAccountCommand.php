@@ -39,7 +39,7 @@ class CreateAllegroAccountCommand extends Command
             $input->getArgument('redirectUri'),
         ];
 
-        $allegroAccount = AllegroAccount::from($name, $clientId, $clientSecret, $redirectUri);
+        $allegroAccount = AllegroAccount::from($name, $clientId, $clientSecret, $redirectUri, true);
 
         $this->entityManager->persist($allegroAccount);
         $this->entityManager->flush();
