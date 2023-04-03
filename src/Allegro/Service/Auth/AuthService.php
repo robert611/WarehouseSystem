@@ -8,6 +8,7 @@ class AuthService
 {
     public const CODE_CHALLENGE_METHOD = 'S256';
     public const RESPONSE_TYPE = 'code';
+
     /**
      * @throws Exception
      */

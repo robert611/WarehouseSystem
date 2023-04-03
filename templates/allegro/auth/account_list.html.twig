@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Allegro authorization{% endblock %}
+
+{% block body %}
+    <div {{ react_component('AllegroAuth', {'allegroAccounts': allegroAccounts|normalize('array', {groups: 'allegro_account:read'})}) }}></div>
+{% endblock %}

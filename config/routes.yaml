@@ -13,3 +13,7 @@ product_controllers:
 warehouse_controllers:
     resource: ../src/Warehouse/Controller/
     type: attribute
+
+allegro_controllers:
+    resource: ../src/Allegro/Controller/
+    type: attribute

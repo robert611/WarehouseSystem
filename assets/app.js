@@ -15,4 +15,4 @@ import './styles/utils/flexbox.scss';
 // start the Stimulus application
 import './bootstrap';
 
-registerReactControllerComponents(require.context('./react_ux/controllers', true, /\.(j|t)sx?$/));
+registerReactControllerComponents(require.context('./react_ux/allegro/controllers', true, /\.(j|t)sx?$/));
