@@ -15,8 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/allegro/auth')]
-class AuthController extends AbstractController
+#[Route('/allegro/auth/code')]
+class AuthCodeController extends AbstractController
 {
     public function __construct(
         private readonly AllegroAccountRepository $allegroAccountRepository,
@@ -24,7 +24,7 @@ class AuthController extends AbstractController
     ){
     }
 
-    #[Route('/index', name: 'allegro_auth_index', methods: ['GET'])]
+    #[Route('/index', name: 'allegro_auth_code_index', methods: ['GET'])]
     public function index(): Response
     {
         $allegroAccounts = $this->allegroAccountRepository->findAll();
@@ -34,9 +34,10 @@ class AuthController extends AbstractController
         ]);
     }
 
-    #[Route('/authorize/account/{account}', name: 'allegro_auth_authorize_account', methods: ['GET'])]
+    #[Route('/authorize/account/{account}', name: 'allegro_auth_code_authorize_account', methods: ['GET'])]
     public function authorizeAccount(AllegroAccount $account, AuthService $authService): Response
     {
+        // NOT USED FOR THE TIME BEING
         try {
             $codeVerifier = $authService->generateCodeVerifier();
         } catch (Exception $e) {
@@ -52,7 +53,7 @@ class AuthController extends AbstractController
 
         return new JsonResponse([
             'auth_url' => Endpoint::AUTH_URL,
-            'response_type' => AuthService::RESPONSE_TYPE,
+            'response_type' => AuthService::CODE_RESPONSE_TYPE,
             'client_id' => $account->getClientId(),
             'redirect_uri' => $redirectUri,
             'code_challenge_method' => AuthService::CODE_CHALLENGE_METHOD,
@@ -60,9 +61,10 @@ class AuthController extends AbstractController
         ]);
     }
 
-    #[Route('/redirect/page/{account}', name: 'allegro_auth_redirect_page', methods: ['GET'])]
+    #[Route('/redirect/page/{account}', name: 'allegro_auth_code_redirect_page', methods: ['GET'])]
     public function redirectPage(AllegroAccount $account, Request $request): Response
     {
+        // NOT USED FOR THE TIME BEING
         if (false === $request->query->has('code')) {
             return new Response('No code provided', 400);
         }

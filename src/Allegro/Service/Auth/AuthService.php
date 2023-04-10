@@ -7,7 +7,8 @@ use Exception;
 class AuthService
 {
     public const CODE_CHALLENGE_METHOD = 'S256';
-    public const RESPONSE_TYPE = 'code';
+    public const CODE_RESPONSE_TYPE = 'code';
+    public const DEVICE_GRANT_TYPE = 'urn:ietf:params:oauth:grant-type:device_code';
 
     /**
      * @throws Exception

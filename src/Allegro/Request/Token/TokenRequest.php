@@ -73,4 +73,52 @@ class TokenRequest
 
         return $content;
     }
+
+    public function getDeviceCode(AllegroAccount $account): array
+    {
+        $options = [
+            'headers' => [
+                'Authorization' => 'Basic ' . $account->getBasicToken(),
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'query' => [
+                'client_id' => $account->getClientId(),
+            ],
+        ];
+
+        try {
+            $response = $this->allegroClient->request('POST', Endpoint::DEVICE_AUTH, $options);
+            $content = json_decode($response->getContent(false), true); // False makes it return true response instead of exception!
+        } catch (Throwable $e) {
+            $this->allegroLogger->critical($e->getMessage());
+
+            return ['error' => 'Internal error'];
+        }
+
+        return $content;
+    }
+
+    public function getSandboxAccessToken(AllegroAccount $account)
+    {
+        $options = [
+            'headers' => [
+                'Authorization' => 'Basic ' . $account->getBasicToken(),
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'body' => [
+                'grant_type' => 'client_credentials',
+            ],
+        ];
+
+        try {
+            $response = $this->allegroClient->request('POST', Endpoint::TOKEN, $options);
+            $content = json_decode($response->getContent(false), true); // False makes it return true response instead of exception!
+        } catch (Throwable $e) {
+            $this->allegroLogger->critical($e->getMessage());
+
+            return ['error' => 'Internal error'];
+        }
+
+        return $content;
+    }
 }
