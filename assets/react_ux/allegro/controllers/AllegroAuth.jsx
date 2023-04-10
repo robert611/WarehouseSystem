@@ -20,7 +20,10 @@ class AllegroAuth extends Component {
         return (
             <div className="allegro-auth-accounts mx-5 mt-4">
                 <h2>Konta allegro</h2>
-                {allegroAccountsButtons}
+                <hr/>
+                <div className="row">
+                    {allegroAccountsButtons}
+                </div>
             </div>
         );
     }

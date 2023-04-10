@@ -4,6 +4,7 @@ namespace App\Allegro\Request\Token;
 
 use App\Allegro\Entity\AllegroAccount;
 use App\Allegro\Model\Endpoint;
+use App\Allegro\Service\Auth\AuthService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -24,46 +25,33 @@ class TokenRequest
         $parameters = [
             'grant_type' => 'authorization_code',
             'code' => '',
-            'redirect_uri' => $allegroAccount->getRedirectUri(),
+            'redirect_uri' => '',
             'code_verifier' => '',
         ];
 
         try {
-            $response = $this->allegroClient->request('POST', Endpoint::TOKEN_URL, $parameters);
+            $response = $this->allegroClient->request('POST', Endpoint::TOKEN, $parameters);
         } catch (TransportExceptionInterface $e) {
 
         }
     }
 
-    /**
-     * Requires special "code" that is returned by allegro after account owner accepted third party application
-     * to manage his account
-     * Returns json array including refresh token valid for three months, that can be used to update access token
-     */
-    public function getRefreshToken(AllegroAccount $account, string $code): array
+    public function getRefreshToken(AllegroAccount $account): array
     {
         $parameters = [
-            'grant_type' => 'authorization_code',
-            'code' => $code,
-//            'redirect_uri' => $this->router->generate(
-//                'allegro_auth_redirect_page',
-//                ['account' => $account->getId()],
-//                UrlGeneratorInterface::ABSOLUTE_URL,
-//            ),
+            'grant_type' => AuthService::DEVICE_GRANT_TYPE,
+            'device_code' => $account->getDeviceCode(),
         ];
-
-        $parameters['redirect_uri'] = Endpoint::AUTH_REDIRECT_URL; // For some reason allegro does not accept uris
 
         $options = [
             'headers' => [
                 'Authorization' => 'Basic ' . $account->getBasicToken(),
-                'Content-Type' => 'application/x-www-form-urlencoded',
             ],
             'query' => $parameters,
         ];
 
         try {
-            $response = $this->allegroClient->request('POST', Endpoint::TOKEN_URL, $options);
+            $response = $this->allegroClient->request('POST', Endpoint::TOKEN, $options);
             $content = json_decode($response->getContent(false), true); // False makes it return true response instead of exception!
         } catch (Throwable $e) {
             $this->allegroLogger->critical($e->getMessage());

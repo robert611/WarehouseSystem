@@ -187,11 +187,42 @@ class AllegroAccount
 
         $this->refreshToken = $refreshToken;
         $this->accessToken = $accessToken;
-        $this->expiresAt = $dateTime;
+        $this->tokenExpiresAt = $dateTime;
+    }
+
+    public function updateDeviceCode(string $deviceCode, int $expiresIn): void
+    {
+        $dateTime = new DateTimeImmutable();
+        $dateTime = $dateTime->add(new DateInterval("PT{$expiresIn}S"));
+
+        $this->deviceCode = $deviceCode;
+        $this->codeExpiresAt = $dateTime;
     }
 
     public function getBasicToken(): string
     {
         return base64_encode($this->getClientId() . ':' . $this->getClientSecret());
+    }
+
+    #[Groups(['allegro_account:read'])]
+    public function isDeviceCodeActive(): bool
+    {
+        // This function is used in react js
+        if (new DateTimeImmutable() >= $this->codeExpiresAt) {
+            return false;
+        }
+
+        return true;
+    }
+
+    #[Groups(['allegro_account:read'])]
+    public function isRefreshTokenActive(): bool
+    {
+        // This function is used in react js
+        if (null === $this->refreshToken) {
+            return false;
+        }
+
+        return true;
     }
 }

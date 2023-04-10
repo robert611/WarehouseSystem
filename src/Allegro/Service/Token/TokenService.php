@@ -11,7 +11,7 @@ class TokenService
 
     public function __construct(TokenRequest $tokenRequest)
     {
-        $this->tokenRequest = $tokenRequest;    
+        $this->tokenRequest = $tokenRequest;
     }
     
     public function refreshAllegroToken(AllegroAccount $allegroAccount): void
