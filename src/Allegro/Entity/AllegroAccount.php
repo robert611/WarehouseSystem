@@ -27,11 +27,11 @@ class AllegroAccount
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $clientSecret;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $redirectUri;
-
     #[ORM\Column(type: 'smallint')]
     private bool $active;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $deviceCode;
 
     #[ORM\Column(type: 'string', length: 2048, nullable: true)]
     private ?string $refreshToken;
@@ -40,7 +40,13 @@ class AllegroAccount
     private ?string $accessToken;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private ?DateTimeImmutable $expiresAt;
+    private ?DateTimeImmutable $codeExpiresAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?DateTimeImmutable $tokenExpiresAt;
+
+    #[ORM\Column(type: 'smallint')]
+    private bool $isSandbox;
 
     public function getId(): ?int
     {
@@ -71,18 +77,6 @@ class AllegroAccount
         return $this;
     }
 
-    public function getRedirectUri(): ?string
-    {
-        return $this->redirectUri;
-    }
-
-    public function setRedirectUri(?string $redirectUri): self
-    {
-        $this->redirectUri = $redirectUri;
-
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -105,6 +99,15 @@ class AllegroAccount
         $this->active = $active;
     }
 
+    public function getDeviceCode(): ?string
+    {
+        return $this->deviceCode;
+    }
+
+    public function setDeviceCode(?string $deviceCode): void
+    {
+        $this->deviceCode = $deviceCode;
+    }
 
     public function getRefreshToken(): ?string
     {
@@ -118,16 +121,24 @@ class AllegroAccount
         return $this;
     }
 
-    public function getExpiresAt(): ?DateTimeImmutable
+    public function getCodeExpiresAt(): ?DateTimeImmutable
     {
-        return $this->expiresAt;
+        return $this->codeExpiresAt;
     }
 
-    public function setExpiresAt(?DateTimeImmutable $expiresAt): self
+    public function setCodeExpiresAt(?DateTimeImmutable $codeExpiresAt): void
     {
-        $this->expiresAt = $expiresAt;
+        $this->codeExpiresAt = $codeExpiresAt;
+    }
 
-        return $this;
+    public function getTokenExpiresAt(): ?DateTimeImmutable
+    {
+        return $this->tokenExpiresAt;
+    }
+
+    public function setTokenExpiresAt(?DateTimeImmutable $tokenExpiresAt): void
+    {
+        $this->tokenExpiresAt = $tokenExpiresAt;
     }
 
     public function getAccessToken(): ?string
@@ -142,19 +153,29 @@ class AllegroAccount
         return $this;
     }
 
+    public function isSandbox(): bool
+    {
+        return $this->isSandbox;
+    }
+
+    public function setIsSandbox(bool $isSandbox): void
+    {
+        $this->isSandbox = $isSandbox;
+    }
+
     public static function from(
         string $name,
         string $clientId,
         string $clientSecret,
-        string $redirectUri,
-        bool $active
+        string $isSandbox,
+        bool $active,
     ): self {
         $allegroAccount = new AllegroAccount();
         $allegroAccount->name = $name;
         $allegroAccount->clientId = $clientId;
         $allegroAccount->clientSecret = $clientSecret;
-        $allegroAccount->redirectUri = $redirectUri;
         $allegroAccount->active = $active;
+        $allegroAccount->isSandbox = $isSandbox;
 
         return $allegroAccount;
     }

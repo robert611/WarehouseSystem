@@ -27,19 +27,19 @@ class CreateAllegroAccountCommand extends Command
             ->addArgument('name', InputArgument::REQUIRED, 'Name of the allegro account')
             ->addArgument('clientId', InputArgument::REQUIRED, 'Client id of the allegro account')
             ->addArgument('clientSecret', InputArgument::REQUIRED, 'Client secret of the allegro account')
-            ->addArgument('redirectUri', InputArgument::REQUIRED, 'Redirect uri of the allegro account');
+            ->addArgument('isSandbox', InputArgument::REQUIRED, 'Is a sandbox account?');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        [$name, $clientId, $clientSecret, $redirectUri] = [
+        [$name, $clientId, $clientSecret, $isSandbox] = [
             $input->getArgument('name'),
             $input->getArgument('clientId'),
             $input->getArgument('clientSecret'),
-            $input->getArgument('redirectUri'),
+            $input->getArgument('isSandbox'),
         ];
 
-        $allegroAccount = AllegroAccount::from($name, $clientId, $clientSecret, $redirectUri, true);
+        $allegroAccount = AllegroAccount::from($name, $clientId, $clientSecret, $isSandbox, true);
 
         $this->entityManager->persist($allegroAccount);
         $this->entityManager->flush();
