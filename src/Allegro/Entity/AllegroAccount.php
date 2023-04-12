@@ -55,7 +55,7 @@ class AllegroAccount
 
     public function getClientId(): ?string
     {
-        return $this->clientId;
+        return trim($this->clientId);
     }
 
     public function setClientId(string $clientId): self
@@ -67,7 +67,7 @@ class AllegroAccount
 
     public function getClientSecret(): ?string
     {
-        return $this->clientSecret;
+        return trim($this->clientSecret);
     }
 
     public function setClientSecret(string $clientSecret): self
@@ -201,7 +201,7 @@ class AllegroAccount
 
     public function getBasicToken(): string
     {
-        return base64_encode($this->getClientId() . ':' . $this->getClientSecret());
+        return base64_encode(trim($this->getClientId()) . ':' . trim($this->getClientSecret()));
     }
 
     #[Groups(['allegro_account:read'])]
