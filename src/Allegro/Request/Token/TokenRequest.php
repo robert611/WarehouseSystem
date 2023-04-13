@@ -97,8 +97,10 @@ class TokenRequest extends AllegroRequest
             'headers' => [
                 'Authorization' => 'Basic ' . $account->getBasicToken(),
                 'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept' => null,
+                'ContentType' => null,
             ],
-            'query' => [
+            'body' => [
                 'client_id' => $account->getClientId(),
             ],
         ];

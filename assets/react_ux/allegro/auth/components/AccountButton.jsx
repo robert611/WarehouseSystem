@@ -13,14 +13,15 @@ const AccountButton = function (props) {
             .then((response) => {
                 return response.json();
             })
-            .then((response) => {
-                if (response.status === 'error') {
+            .then((auth) => {
+                if (auth.status === 'error') {
                     alert('Coś poszło nie tak podczas pobierania tokenów. Proszę zgłosić błąd.');
 
                     return;
                 }
 
-                window.location = response.verification_uri;
+                window.open(auth.verification_uri, '_blank');
+                props.onShownLink(allegroAccountId);
             })
     }
 
@@ -41,7 +42,7 @@ const AccountButton = function (props) {
                     return;
                 }
 
-                this.setState({refreshTokenActive: true})
+                props.onFetchedToken(allegroAccountId);
             })
     }
 
