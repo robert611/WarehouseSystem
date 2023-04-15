@@ -20,7 +20,7 @@ framework:
     http_client:
         scoped_clients:
             allegro.client:
-                base_uri: 'https://allegro.pl' #'https://allegro.pl.allegrosandbox.pl'
+                base_uri: "%allegro_api_url%"
                 headers:
                     Accept: "application/vnd.allegro.public.v1+json"
                     ContentType: "application/vnd.allegro.public.v1+json"
