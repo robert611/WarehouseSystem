@@ -10,7 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'allegro:refresh-token')]
+#[AsCommand(name: 'allegro:refresh-sandbox-token')]
 class RefreshSandboxTokenCommand extends Command
 {
     public function __construct(
@@ -33,8 +33,7 @@ class RefreshSandboxTokenCommand extends Command
                 continue;
             }
 
-            $account->updateRefreshToken(
-                $response['refresh_token'],
+            $account->updateAccessToken(
                 $response['access_token'],
                 $response['expires_in'],
             );

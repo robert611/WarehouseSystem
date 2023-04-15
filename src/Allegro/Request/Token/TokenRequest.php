@@ -78,7 +78,7 @@ class TokenRequest extends AllegroRequest
     }
 
     /**
-     * @return array{access_token: string, refresh_token: string, expires_in: int}
+     * @return array{access_token: string, expires_in: int}
      */
     public function getSandboxAccessToken(string $basicToken): array
     {
