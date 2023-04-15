@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(name: 'allegro:refresh-token')]
-class RefreshTokenCommand extends Command
+class RefreshSandboxTokenCommand extends Command
 {
     public function __construct(
         private readonly TokenRequest $tokenRequest,
@@ -23,10 +23,10 @@ class RefreshTokenCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $accounts = $this->allegroAccountRepository->findBy(['active' => 1, 'isSandbox' => 0]);
+        $accounts = $this->allegroAccountRepository->findBy(['active' => 1, 'isSandbox' => 1]);
 
         foreach ($accounts as $account) {
-            $response = $this->tokenRequest->getAccessToken($account->getBasicToken(), $account->getRefreshToken());
+            $response = $this->tokenRequest->getSandboxAccessToken($account->getBasicToken());
 
             if (false === array_key_exists('access_token', $response)) {
                 $output->writeln(sprintf('Refreshing access token failed for account: %s', $account->getName()));

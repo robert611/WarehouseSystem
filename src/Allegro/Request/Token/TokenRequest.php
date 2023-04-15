@@ -4,16 +4,10 @@ namespace App\Allegro\Request\Token;
 
 use App\Allegro\Model\Endpoint;
 use App\Allegro\Request\AllegroRequest;
-use App\Allegro\Service\Auth\AuthService;
 use App\Shared\Enum\HttpMethodEnum;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Throwable;
 
 class TokenRequest extends AllegroRequest
 {
@@ -25,11 +19,6 @@ class TokenRequest extends AllegroRequest
     }
 
     /**
-     * @throws TransportExceptionInterface
-     * @throws Throwable
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
      * @return array{access_token: string, refresh_token: string, expires_in: int}
      */
     public function getAccessToken(string $basicToken, string $refreshToken): array
@@ -48,16 +37,7 @@ class TokenRequest extends AllegroRequest
             'query' => $parameters,
         ];
 
-        try {
-            $response = $this->allegroClient->request('POST', Endpoint::TOKEN, $options);
-            $content = json_decode($response->getContent(false), true);
-        } catch (Throwable $e) {
-            $this->allegroLogger->critical($e->getMessage());
-
-            throw new $e;
-        }
-
-        return $content;
+        return $this->makeRequest(HttpMethodEnum::POST, Endpoint::TOKEN, $options);
     }
 
     /**
@@ -66,7 +46,7 @@ class TokenRequest extends AllegroRequest
     public function getRefreshToken(string $deviceCode, string $basicToken): array
     {
         $parameters = [
-            'grant_type' => AuthService::DEVICE_GRANT_TYPE,
+            'grant_type' => 'urn:ietf:params:oauth:grant-type:device_code',
             'device_code' => $deviceCode,
         ];
 
