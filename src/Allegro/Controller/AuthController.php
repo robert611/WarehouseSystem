@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/allegro/auth')]
-class AuthDeviceController extends AbstractController
+class AuthController extends AbstractController
 {
     public function __construct(
         private readonly AllegroAccountRepository $allegroAccountRepository,
@@ -32,7 +32,7 @@ class AuthDeviceController extends AbstractController
     #[Route('/authorize/account/{account}', name: 'allegro_auth_authorize_account', methods: ['GET'])]
     public function authorizeAccount(AllegroAccount $account): Response
     {
-        $response = $this->tokenRequest->getDeviceCode($account);
+        $response = $this->tokenRequest->getDeviceCode($account->getClientId(), $account->getBasicToken());
 
         if (!isset($response['device_code'])) {
             return new JsonResponse(['status' => 'error', 'message' => $response['error'] ?? 'Unknown error']);
@@ -49,7 +49,7 @@ class AuthDeviceController extends AbstractController
     #[Route('/get/refresh/token/{account}', name: 'allegro_auth_get_refresh_token', methods: ['GET'])]
     public function getRefreshToken(AllegroAccount $account): Response
     {
-        $response = $this->tokenRequest->getRefreshToken($account);
+        $response = $this->tokenRequest->getRefreshToken($account->getDeviceCode(), $account->getBasicToken());
 
         if (!isset($response['refresh_token'])) {
             return new JsonResponse(['status' => 'error']);

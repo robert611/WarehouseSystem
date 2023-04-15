@@ -13,8 +13,7 @@ enum SaleTypeEnum: int implements TransformableToString, TranslatableToString
 
     public function toString(): string
     {
-        return match($this)
-        {
+        return match ($this) {
             self::BUY_NOW => 'Buy Now',
             self::AUCTION => 'Auction',
             self::BOTH => 'Buy Now & Auction',
@@ -23,8 +22,7 @@ enum SaleTypeEnum: int implements TransformableToString, TranslatableToString
 
     public static function translateCaseToString(mixed $case): string
     {
-        return match($case)
-        {
+        return match ($case) {
             self::BUY_NOW->value => 'Buy Now',
             self::AUCTION->value => 'Auction',
             self::BOTH->value => 'Buy Now & Auction',

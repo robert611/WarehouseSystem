@@ -2,10 +2,10 @@
 
 namespace App\Allegro\Request\Token;
 
-use App\Allegro\Entity\AllegroAccount;
 use App\Allegro\Model\Endpoint;
 use App\Allegro\Request\AllegroRequest;
 use App\Allegro\Service\Auth\AuthService;
+use App\Shared\Enum\HttpMethodEnum;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -18,10 +18,10 @@ use Throwable;
 class TokenRequest extends AllegroRequest
 {
     public function __construct(
-        private readonly HttpClientInterface $allegroClient,
-        private readonly UrlGeneratorInterface $router,
+        protected readonly HttpClientInterface $allegroClient,
         protected readonly LoggerInterface $allegroLogger,
-    ){
+        private readonly UrlGeneratorInterface $router,
+    ) {
     }
 
     /**
@@ -63,58 +63,38 @@ class TokenRequest extends AllegroRequest
     /**
      * @return array{access_token: string, refresh_token: string, expires_in: int}
      */
-    public function getRefreshToken(AllegroAccount $account): array
+    public function getRefreshToken(string $deviceCode, string $basicToken): array
     {
         $parameters = [
             'grant_type' => AuthService::DEVICE_GRANT_TYPE,
-            'device_code' => $account->getDeviceCode(),
+            'device_code' => $deviceCode,
         ];
 
         $options = [
             'headers' => [
-                'Authorization' => 'Basic ' . $account->getBasicToken(),
+                'Authorization' => 'Basic ' . $basicToken,
             ],
             'query' => $parameters,
         ];
 
-        try {
-            $response = $this->allegroClient->request('POST', Endpoint::TOKEN, $options);
-            $content = json_decode($response->getContent(false), true);
-        } catch (Throwable $e) {
-            $this->allegroLogger->critical($e->getMessage());
-
-            return ['error' => 'Internal error'];
-        }
-
-        $this->logResponseErrors($content);
-
-        return $content;
+        return $this->makeRequest(HttpMethodEnum::POST, Endpoint::TOKEN, $options);
     }
 
-    public function getDeviceCode(AllegroAccount $account): array
+    public function getDeviceCode(string $clientId, string $basicToken): array
     {
         $options = [
             'headers' => [
-                'Authorization' => 'Basic ' . $account->getBasicToken(),
+                'Authorization' => 'Basic ' . $basicToken,
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Accept' => null,
                 'ContentType' => null,
             ],
             'body' => [
-                'client_id' => $account->getClientId(),
+                'client_id' => $clientId,
             ],
         ];
 
-        try {
-            $response = $this->allegroClient->request('POST', Endpoint::DEVICE_AUTH, $options);
-            $content = json_decode($response->getContent(false), true); // False makes it return true response instead of exception!
-        } catch (Throwable $e) {
-            $this->allegroLogger->critical($e->getMessage());
-
-            return ['error' => 'Internal error'];
-        }
-
-        return $content;
+        return $this->makeRequest(HttpMethodEnum::POST, Endpoint::DEVICE_AUTH, $options);
     }
 
     /**
@@ -132,15 +112,6 @@ class TokenRequest extends AllegroRequest
             ],
         ];
 
-        try {
-            $response = $this->allegroClient->request('POST', Endpoint::TOKEN, $options);
-            $content = json_decode($response->getContent(false), true);
-        } catch (Throwable $e) {
-            $this->allegroLogger->critical($e->getMessage());
-
-            return ['error' => 'Internal error'];
-        }
-
-        return $content;
+        return $this->makeRequest(HttpMethodEnum::POST, Endpoint::TOKEN, $options);
     }
 }
