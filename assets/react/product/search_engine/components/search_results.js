@@ -9,6 +9,7 @@ class SearchResults extends Component {
         };
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
+
     handleFormSubmit(event) {
         event.preventDefault();
         const form = document.getElementById('product-search-engine-form');
@@ -38,6 +39,7 @@ class SearchResults extends Component {
         const productRows = products.map((product, index) => {
             return <ProductRow key={product.id} product={product} index={index}></ProductRow>
         });
+
         return (
             <div className="table-responsive">
                 <table className="table table-bordered">

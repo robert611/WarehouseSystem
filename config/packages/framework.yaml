@@ -17,6 +17,14 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+        scoped_clients:
+            allegro.client:
+                base_uri: "%allegro_api_url%"
+                headers:
+                    Accept: "application/vnd.allegro.public.v1+json"
+                    ContentType: "application/vnd.allegro.public.v1+json"
+
 when@test:
     framework:
         test: true
