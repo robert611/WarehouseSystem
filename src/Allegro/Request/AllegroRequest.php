@@ -13,7 +13,7 @@ abstract class AllegroRequest
             $response = $this->allegroClient->request($method->toString(), $endpoint, $options);
             $content = $response->toArray(false);
         } catch (Throwable $e) {
-            $this->allegroLogger->critical($e->getMessage());
+            $this->allegroLogger->error($e->getMessage());
 
             return ['error' => 'Internal error'];
         }
@@ -28,7 +28,7 @@ abstract class AllegroRequest
         if (array_key_exists('error', $response) || array_key_exists('errors', $response)) {
             $stringify = var_export($response, true);
             $stringifyOptions = var_export($options, true);
-            $this->allegroLogger->critical(sprintf(
+            $this->allegroLogger->error(sprintf(
                 'Request returned errors: %s, for endpoint: %s, %s',
                 $stringify,
                 $endpoint,

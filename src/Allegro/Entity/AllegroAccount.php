@@ -182,10 +182,15 @@ class AllegroAccount
 
     public function updateRefreshToken(string $refreshToken, string $accessToken, int $expiresIn): void
     {
+        $this->refreshToken = $refreshToken;
+        $this->updateAccessToken($accessToken, $expiresIn);
+    }
+
+    public function updateAccessToken(string $accessToken, int $expiresIn): void
+    {
         $dateTime = new DateTimeImmutable();
         $dateTime = $dateTime->add(new DateInterval("PT{$expiresIn}S"));
 
-        $this->refreshToken = $refreshToken;
         $this->accessToken = $accessToken;
         $this->tokenExpiresAt = $dateTime;
     }
